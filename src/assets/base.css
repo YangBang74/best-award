@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  text-transform: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.wrapper {
+  font-family: 'Inter', sans-serif;
+  color: #000;
+}
+
+.container {
+  padding: 0 100px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
