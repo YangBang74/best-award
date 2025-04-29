@@ -16,6 +16,6 @@ import Menu from './components/Menu.vue'
 
 <style scoped>
 main {
-  padding: 28px 0 0;
+  padding: 55.33px 0 0;
 }
 </style>

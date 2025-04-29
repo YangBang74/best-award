@@ -1,1 +1,29 @@
 @import url(./base.css);
+
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --text-color-hover: #646464;
+  --button-radius: 5px;
+  --button-background: #000000;
+  --button-text: #ffffff;
+  --button-hover: #00000080;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+a,
+button {
+  transition: 0.2s;
+}
+
+a {
+  color: var(--text-color);
+}
+
+a:hover {
+  color: var(--text-color-hover);
+}

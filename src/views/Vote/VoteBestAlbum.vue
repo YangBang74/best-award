@@ -1,0 +1,3 @@
+<template>
+    Vote Album
+</template>

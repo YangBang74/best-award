@@ -1,5 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+const authStore = useAuthStore()
 
 const toggleMenu = () => {
   const burger = document.querySelector('.header__burger')
@@ -15,7 +17,7 @@ const toggleMenu = () => {
   <header class="header">
     <div class="container">
       <div class="header__wrap">
-        <div class="header__logo">Best.Award</div>
+        <a class="header__logo" href="/">Best.Award</a>
         <nav class="header__menu">
           <a href="/">Home</a>
           <a href="/Awards">Awards</a>
@@ -23,7 +25,12 @@ const toggleMenu = () => {
           <a href="/about">About</a>
         </nav>
         <div class="header__action">
-          <button type="button" class="header__profil">
+          <router-link
+            to="/profile"
+            v-if="!authStore.userInfo.token"
+            type="button"
+            class="header__profil"
+          >
             <svg
               width="30px"
               height="30px"
@@ -45,7 +52,8 @@ const toggleMenu = () => {
                 stroke-linecap="round"
               />
             </svg>
-          </button>
+          </router-link>
+          <router-link to="/signin" v-else>Sign In</router-link>
           <button type="button" class="header__burger" @click="toggleMenu">
             <span class="header__burger-line"></span>
             <span class="header__burger-line"></span>
@@ -98,6 +106,9 @@ body.lock {
     font-size: 1rem;
     padding: 15px 0;
     font-family: 'Inter', sans-serif;
+  }
+  a:hover {
+    color: #646464;
   }
 }
 

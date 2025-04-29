@@ -1,10 +1,67 @@
 <script setup>
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/autoplay'
+import { ref } from 'vue'
 
-const modules = ['Autoplay']
+const singles = ref([
+  {
+    id: 1,
+    author: 'Pharaoh',
+    src: '/public/singls/pharaoh-benzobak.jfif',
+    name: '10-13',
+    genre: 'hip-hop',
+    vote: '0',
+  },
+  {
+    id: 2,
+    author: 'Дайте танк',
+    src: '/public/singls/dayte-tank-logika.jfif',
+    name: 'Логика',
+    genre: 'Инди',
+    vote: '0',
+  },
+  {
+    id: 3,
+    author: 'Кроссы',
+    src: '/public/singls/krosy-the-bes.jfif',
+    name: 'The Bess',
+    genre: 'Electro',
+    vote: '0',
+  },
+  {
+    id: 4,
+    author: 'Женя Трофимов, Комната культуры',
+    src: '/public/singls/poezda.jfif',
+    name: 'Поезда',
+    genre: 'Инди',
+    vote: '0',
+  },
+  {
+    id: 5,
+    author: 'Скриптонит',
+    src: '/public/singls/skriptonit-ne-ralab.jfif',
+    name: 'Не раслабляся',
+    genre: 'hip-hop',
+    vote: '0',
+  },
+  {
+    id: 6,
+    author: 'Xolidayboy',
+    src: '/public/singls/xolidayboy-pazhary.jfif',
+    name: 'ПОЖАРЫ',
+    genre: 'Инди',
+    vote: '0',
+  },
+])
+const currentIndex = ref(0)
+
+const nextSlide = () => {
+  if (currentIndex.value < 5) {
+    currentIndex.value = (currentIndex.value + 1) % singles.value.length
+  }
+}
+
+const prevSlide = () => {
+  currentIndex.value = (currentIndex.value - 1 + singles.value.length) % singles.value.length
+}
 </script>
 <template>
   <main>
@@ -16,34 +73,32 @@ const modules = ['Autoplay']
             <div class="hero__content-text">
               <p>Vote for the best, reward for the best</p>
             </div>
-            <button class="hero__content-button">
-              <router-link to="/vote" class="hero__content-button-link"> Vote Now </router-link>
-            </button>
+            <router-link to="/vote" class="hero__content-button"> Vote Now </router-link>
           </div>
-          <Swiper
-            :modules="[Autoplay, Pagination, Navigation]"
-            :slides-per-view="1"
-            :loop="true"
-            :autoplay="{ delay: 2500, disableOnInteraction: false }"
-            pagination
-            navigation
-            class="mySwiper"
-          >
-            <SwiperSlide>
-              <div class="slide-content">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, accusamus.</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div class="slide-content">Slide 2</div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div class="slide-content">Slide 3</div>
-            </SwiperSlide>
-          </Swiper>
         </div>
       </div>
     </hero>
+    <section class="songs">
+      <div class="container">
+        <h1 class="songs-title">Best Singles</h1>
+        <div class="slider">
+          <div class="slides" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+            <div class="singles__block" v-for="sing in singles" :key="singles.id">
+              <div class="singles__block-img">
+                <img :src="sing.src" :alt="sing.name" />
+              </div>
+              <div class="singles__about">
+                <h4 class="singles__about-titile">
+                  {{ sing.name }}
+                </h4>
+              </div>
+            </div>
+          </div>
+          <button @click="prevSlide">Previous</button>
+          <button @click="nextSlide">Next</button>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -66,11 +121,9 @@ main {
 }
 
 .hero__content {
-  padding: 120px 0;
+  padding: 150px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: left;
 }
 
 .hero__content-title {
@@ -95,35 +148,47 @@ main {
 }
 
 .hero__content-button {
-  margin-top: 20px;
   background: #000000;
+  margin-top: 20px;
   border-radius: 5px;
-
   width: 150px;
   height: 40px;
-  color: #ffffff;
+  text-align: center;
+  align-content: center;
   transition: 0.2s;
-  border: none;
-}
-
-.hero__content-button-link {
-  padding: 13px 45px;
   color: #ffffff;
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .hero__content-button:hover {
   background: #00000080;
 }
 
-.slide-content {
-  height: 300px;
+.songs {
+  margin: 50px 0;
+}
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%; /* Ширина слайдера */
+  height: 400px; /* Высота слайдера */
+}
+
+.slides {
+  width: 500px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ddd;
-  font-size: 24px;
-  border-radius: 12px;
-  z-index: 10;
+  transition: transform 0.5s ease;
+}
+
+.slides div {
+  min-width: 100%;
+}
+
+img {
+  width: 300px;
+  height: 300px;
+  height: auto;
 }
 </style>

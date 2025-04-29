@@ -1,0 +1,1 @@
+<template>Vote Feat</template>
