@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import axiosApiInstance from '@/api'
 
@@ -25,40 +24,31 @@ const getSingles = async () => {
     console.error('Error fetching singles:', err)
   }
 }
-
-console.log(authStore.userInfo.token)
-console.log(authStore.userInfo.userId)
 const voteForSong = async (songId) => {
   try {
-    // Получаем токен авторизации и userId
     const token = authStore.userInfo.token
-    const userId = authStore.userInfo.userId // Предполагаем, что userId хранится в userInfo
-
+    const userId = authStore.userInfo.userId
     if (!token || !userId) {
       console.log('User not authenticated')
       return
     }
-
-    // Найдем песню по ID
     const song = singles.value.find((sing) => sing.id === songId)
 
     if (song) {
-      // Проверяем, голосовал ли уже этот пользователь
+      if (!song.voters) {
+        song.voters = {}
+      }
       if (song.voters[userId]) {
         console.log('You have already voted for this song.')
         return
       }
-
-      // Отправляем запрос на обновление голосов
       await axiosApiInstance.patch(
         `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles/${songId}.json`,
         {
           vote: song.vote + 1,
-          voters: { ...song.voters, [userId]: true }, // Добавляем userId в список голосующих
+          voters: { ...song.voters, [userId]: true },
         },
       )
-
-      // Обновляем локальные данные после успешного голосования
       song.vote += 1
       song.voters[userId] = true
     }
@@ -67,7 +57,6 @@ const voteForSong = async (songId) => {
   }
 }
 
-// Вызов функции для получения песен
 getSingles()
 </script>
 <template>

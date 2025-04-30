@@ -42,6 +42,7 @@ axiosApiInstance.interceptors.response.use(
           JSON.stringify({
             token: newTokens.data.access_token,
             refreshToken: newTokens.data.refresh_token,
+            userId: authStore.userInfo.userId,
           }),
         )
       } catch (err) {

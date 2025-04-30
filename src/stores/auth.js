@@ -11,6 +11,13 @@ export const useAuthStore = defineStore('auth', () => {
     userId: '',
     refreshToken: '',
   })
+  const stored = localStorage.getItem('userTokens')
+  if (stored) {
+    const parsed = JSON.parse(stored)
+    userInfo.value.token = parsed.token || ''
+    userInfo.value.refreshToken = parsed.refreshToken || ''
+    userInfo.value.userId = parsed.userId || ''
+  }
   const error = ref('')
   const loader = ref(false)
 
@@ -37,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
         JSON.stringify({
           token: userInfo.value.token,
           refreshToken: userInfo.value.refreshToken,
-          userId: response.data.localId, // Сохраняем userId тоже
+          userId: userInfo.data.userId, // Сохраняем userId тоже
         }),
       )
     } catch (err) {
