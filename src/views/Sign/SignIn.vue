@@ -25,8 +25,13 @@ const passwordLengthStatus = computed(() => {
 })
 
 const signin = async () => {
-  await authStore.auth({ email: email.value, password: password.value }, 'signin')
-  router.push('/')
+  try {
+    await authStore.auth({ email: email.value, password: password.value }, 'signin')
+    router.push('/')
+  } catch (err) {
+    console.error('Sign-in failed:', err)
+    // authStore.error уже содержит понятное сообщение от Firebase
+  }
 }
 </script>
 

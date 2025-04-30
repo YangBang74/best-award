@@ -4,7 +4,7 @@ import router from './router'
 
 const axiosApiInstance = axios.create()
 
-const apiKey = import.meta.env.VITE_API_KEY_FIREBASE
+const apiKey = import.meta.env.VITE_FIREBASE_API_KEY
 
 axiosApiInstance.interceptors.request.use((config) => {
   const url = config.url
