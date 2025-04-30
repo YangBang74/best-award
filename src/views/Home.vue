@@ -27,7 +27,7 @@ const getSingles = async () => {
 }
 
 console.log(authStore.userInfo.token)
-console.log(authStore.userInfo.user)
+console.log(authStore.userInfo.userId)
 const voteForSong = async (songId) => {
   try {
     // Получаем токен авторизации и userId
