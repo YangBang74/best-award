@@ -37,6 +37,7 @@ export const useAuthStore = defineStore('auth', () => {
         JSON.stringify({
           token: userInfo.value.token,
           refreshToken: userInfo.value.refreshToken,
+          userId: response.data.localId,
         }),
       )
     } catch (err) {

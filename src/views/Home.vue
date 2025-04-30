@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
+import axiosApiInstance from '@/api'
 
 const singles = ref([])
 
@@ -10,7 +11,7 @@ const authStore = useAuthStore()
 
 const getSingles = async () => {
   try {
-    const response = await axios.get(
+    const response = await axiosApiInstance.get(
       'https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles.json',
     )
     singles.value = Object.entries(response.data).map(([key, item]) => ({
@@ -26,27 +27,40 @@ const getSingles = async () => {
 }
 
 console.log(authStore.userInfo.token)
+console.log(authStore.userInfo.user)
 const voteForSong = async (songId) => {
   try {
+    // Получаем токен авторизации и userId
     const token = authStore.userInfo.token
+    const userId = authStore.userInfo.userId // Предполагаем, что userId хранится в userInfo
 
-    if (token) {
-      const song = singles.value.find((sing) => sing.id === songId)
-      if (song) {
-        // Отправляем запрос на обновление голосов
-        await axios.patch(
-          `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles/${songId}.json`,
-          { vote: song.vote + 1 },
-          {
-            headers: {
-              Authorization: `Bearer ${authStore.userInfo.token}`, // Здесь ваш актуальный токен
-            },
-          },
-        )
-        song.vote += 1
-      }
-    } else {
+    if (!token || !userId) {
       console.log('User not authenticated')
+      return
+    }
+
+    // Найдем песню по ID
+    const song = singles.value.find((sing) => sing.id === songId)
+
+    if (song) {
+      // Проверяем, голосовал ли уже этот пользователь
+      if (song.voters[userId]) {
+        console.log('You have already voted for this song.')
+        return
+      }
+
+      // Отправляем запрос на обновление голосов
+      await axiosApiInstance.patch(
+        `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles/${songId}.json`,
+        {
+          vote: song.vote + 1,
+          voters: { ...song.voters, [userId]: true }, // Добавляем userId в список голосующих
+        },
+      )
+
+      // Обновляем локальные данные после успешного голосования
+      song.vote += 1
+      song.voters[userId] = true
     }
   } catch (err) {
     console.error('Error voting for song:', err)
