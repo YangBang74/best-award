@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const singles = ref([
   {
@@ -51,21 +52,10 @@ const singles = ref([
     vote: '0',
   },
 ])
-const currentIndex = ref(0)
-
-const nextSlide = () => {
-  if (currentIndex.value < 5) {
-    currentIndex.value = (currentIndex.value + 1) % singles.value.length
-  }
-}
-
-const prevSlide = () => {
-  currentIndex.value = (currentIndex.value - 1 + singles.value.length) % singles.value.length
-}
 </script>
 <template>
   <main>
-    <hero class="hero">
+    <section class="hero">
       <div class="container">
         <div class="hero__wrap">
           <div class="hero__content">
@@ -77,25 +67,26 @@ const prevSlide = () => {
           </div>
         </div>
       </div>
-    </hero>
+    </section>
     <section class="songs">
       <div class="container">
         <h1 class="songs-title">Best Singles</h1>
-        <div class="slider">
-          <div class="slides" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+        <div class="slider" :slider-scrol>
+          <div class="slides">
             <div class="singles__block" v-for="sing in singles" :key="singles.id">
               <div class="singles__block-img">
                 <img :src="sing.src" :alt="sing.name" />
               </div>
               <div class="singles__about">
-                <h4 class="singles__about-titile">
+                <div class="singles__about-titile">
+                  <p>{{ sing.author }}</p>
                   {{ sing.name }}
-                </h4>
+                </div>
               </div>
             </div>
           </div>
-          <button @click="prevSlide">Previous</button>
-          <button @click="nextSlide">Next</button>
+          <button type="button" class="slider-button slider__prev"><</button>
+          <button type="button" class="slider-button slider__next">></button>
         </div>
       </div>
     </section>
@@ -110,7 +101,7 @@ main {
   width: 100%;
   height: 500px;
   display: flex;
-  background: url('/public/hero/hero-bg.svg') no-repeat -100px 0 / cover;
+  background: url('/hero/hero-bg.svg') no-repeat -100px 0 / cover;
 }
 
 .hero__wrap {
@@ -171,24 +162,62 @@ main {
 
 .slider {
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
   width: 100%; /* Ширина слайдера */
-  height: 400px; /* Высота слайдера */
+  height: 450px; /* Высота слайдера */
 }
 
 .slides {
-  width: 500px;
+  width: 300px;
   display: flex;
+  gap: 30px;
   transition: transform 0.5s ease;
 }
 
-.slides div {
-  min-width: 100%;
+.slider {
+  margin: 30px 0;
 }
 
-img {
-  width: 300px;
-  height: 300px;
-  height: auto;
+.songs-title {
+  font-size: 48px;
+}
+
+.singles__block {
+  position: relative;
+}
+
+.singles__about {
+  border-radius: 0 0 5px 5px;
+  background-color: #000;
+  padding: 10px 0 10px 15px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #fff;
+}
+
+.singles__about p {
+  margin-bottom: 3px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 180px;
+}
+
+.singles__block-img {
+  width: 200px;
+  height: 200px;
+  img {
+    border-radius: 5px 5px 0 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.slider-button {
+  border-radius: 1px solid #000;
+  border-radius: 4px;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
 }
 </style>

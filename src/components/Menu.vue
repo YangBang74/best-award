@@ -1,6 +1,9 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '../stores/auth'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+
 const authStore = useAuthStore()
 
 const toggleMenu = () => {
@@ -10,6 +13,24 @@ const toggleMenu = () => {
   body.classList.toggle('lock')
   burger.classList.toggle('active')
   menu.classList.toggle('active')
+}
+
+const router = useRouter()
+
+const token = computed(() => authStore.userInfo.token)
+
+const checkUser = () => {
+  const tokens = JSON.parse(localStorage.getItem('userTokens'))
+  if (tokens) {
+    authStore.userInfo.token = tokens.token
+    authStore.userInfo.refreshToken = tokens.refreshToken
+  }
+}
+checkUser()
+const logout = () => {
+  authStore.logout()
+  localStorage.removeItem('userTokens')
+  router.push('/signin')
 }
 </script>
 
@@ -25,12 +46,7 @@ const toggleMenu = () => {
           <a href="/about">About</a>
         </nav>
         <div class="header__action">
-          <router-link
-            to="/profile"
-            v-if="!authStore.userInfo.token"
-            type="button"
-            class="header__profil"
-          >
+          <router-link to="/profile" v-if="token" type="button" class="header__profil">
             <svg
               width="30px"
               height="30px"
@@ -53,7 +69,10 @@ const toggleMenu = () => {
               />
             </svg>
           </router-link>
-          <router-link to="/signin" v-else>Sign In</router-link>
+          <router-link to="/signin" v-if="!token">Sign In</router-link>
+          <router-link class="menu__link" to="/signin" v-if="token" @click.prevent="logout"
+            >Logout</router-link
+          >
           <button type="button" class="header__burger" @click="toggleMenu">
             <span class="header__burger-line"></span>
             <span class="header__burger-line"></span>
