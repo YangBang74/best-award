@@ -1,57 +1,60 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import axios from 'axios'
+import { useAuthStore } from '@/stores/auth'
 
-const singles = ref([
-  {
-    id: 1,
-    author: 'Pharaoh',
-    src: '/public/singls/pharaoh-benzobak.jfif',
-    name: '10-13',
-    genre: 'hip-hop',
-    vote: '0',
-  },
-  {
-    id: 2,
-    author: 'Дайте танк',
-    src: '/public/singls/dayte-tank-logika.jfif',
-    name: 'Логика',
-    genre: 'Инди',
-    vote: '0',
-  },
-  {
-    id: 3,
-    author: 'Кроссы',
-    src: '/public/singls/krosy-the-bes.jfif',
-    name: 'The Bess',
-    genre: 'Electro',
-    vote: '0',
-  },
-  {
-    id: 4,
-    author: 'Женя Трофимов, Комната культуры',
-    src: '/public/singls/poezda.jfif',
-    name: 'Поезда',
-    genre: 'Инди',
-    vote: '0',
-  },
-  {
-    id: 5,
-    author: 'Скриптонит',
-    src: '/public/singls/skriptonit-ne-ralab.jfif',
-    name: 'Не раслабляся',
-    genre: 'hip-hop',
-    vote: '0',
-  },
-  {
-    id: 6,
-    author: 'Xolidayboy',
-    src: '/public/singls/xolidayboy-pazhary.jfif',
-    name: 'ПОЖАРЫ',
-    genre: 'Инди',
-    vote: '0',
-  },
-])
+const singles = ref([])
+
+const authStore = useAuthStore()
+
+const getSingles = async () => {
+  try {
+    const response = await axios.get(
+      'https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles.json',
+    )
+    singles.value = Object.entries(response.data).map(([key, item]) => ({
+      id: key,
+      name: item.name,
+      author: item.author,
+      src: item.src,
+      vote: item.vote,
+    }))
+  } catch (err) {
+    console.error('Error fetching singles:', err)
+  }
+}
+
+console.log(authStore.userInfo.token)
+const voteForSong = async (songId) => {
+  try {
+    const token = authStore.userInfo.token
+
+    if (token) {
+      const song = singles.value.find((sing) => sing.id === songId)
+      if (song) {
+        // Отправляем запрос на обновление голосов
+        await axios.patch(
+          `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles/${songId}.json`,
+          { vote: song.vote + 1 },
+          {
+            headers: {
+              Authorization: `Bearer ${authStore.userInfo.token}`, // Здесь ваш актуальный токен
+            },
+          },
+        )
+        song.vote += 1
+      }
+    } else {
+      console.log('User not authenticated')
+    }
+  } catch (err) {
+    console.error('Error voting for song:', err)
+  }
+}
+
+// Вызов функции для получения песен
+getSingles()
 </script>
 <template>
   <main>
@@ -71,22 +74,24 @@ const singles = ref([
     <section class="songs">
       <div class="container">
         <h1 class="songs-title">Best Singles</h1>
-        <div class="slider" :slider-scrol>
+        <div class="slider">
           <div class="slides">
-            <div class="singles__block" v-for="sing in singles" :key="singles.id">
+            <div class="singles__block" v-for="sing in singles" :key="sing.id">
               <div class="singles__block-img">
                 <img :src="sing.src" :alt="sing.name" />
               </div>
               <div class="singles__about">
-                <div class="singles__about-titile">
+                <div class="singles__about-title">
                   <p>{{ sing.author }}</p>
                   {{ sing.name }}
+                </div>
+                <div class="singles__vote">
+                  <p>Голосов: {{ sing.vote }}</p>
+                  <button @click="voteForSong(sing.id)">Голосовать</button>
                 </div>
               </div>
             </div>
           </div>
-          <button type="button" class="slider-button slider__prev"><</button>
-          <button type="button" class="slider-button slider__next">></button>
         </div>
       </div>
     </section>

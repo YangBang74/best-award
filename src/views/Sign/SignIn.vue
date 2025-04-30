@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
@@ -8,10 +8,25 @@ const router = useRouter()
 
 const email = ref()
 const password = ref()
+const pasCorrect = ref()
+const pasColor = ref()
+
+const passwordLengthStatus = computed(() => {
+  if (!password.value) {
+    return ''
+  } else if (password.value.length < 6) {
+    pasColor.value = 'red'
+    pasCorrect.value = true
+    return 'Password is too short'
+  } else {
+    pasColor.value = 'green'
+    return 'Your password is strong and acceptable'
+  }
+})
 
 const signin = async () => {
   await authStore.auth({ email: email.value, password: password.value }, 'signin')
-  router.push('/vote')
+  router.push('/')
 }
 </script>
 
@@ -20,6 +35,9 @@ const signin = async () => {
     <div class="container">
       <h1 class="regstation__title">Welcome back!</h1>
       <p class="resgstation__text">Enter your Credentials to acces your account</p>
+      <div class="error">
+        <p v-if="authStore.error">{{ authStore.error }}!</p>
+      </div>
       <div class="regstation__form">
         <form @submit.prevent="signin">
           <div class="input__wrap">
@@ -41,8 +59,67 @@ const signin = async () => {
               placeholder="Create password"
               v-model="password"
             />
+            <p class="error-password" :style="{ color: pasColor }">{{ passwordLengthStatus }}</p>
           </div>
-          <button type="submit" class="regstation__button button">Login</button>
+          <button type="submit" class="regstation__button button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 200"
+              width="25px"
+              height="25px"
+              v-if="authStore.loader"
+            >
+              <radialGradient
+                id="a12"
+                cx=".66"
+                fx=".66"
+                cy=".3125"
+                fy=".3125"
+                gradientTransform="scale(1.5)"
+              >
+                <stop offset="0" stop-color="#000"></stop>
+                <stop offset=".3" stop-color="#000" stop-opacity=".9"></stop>
+                <stop offset=".6" stop-color="#000" stop-opacity=".6"></stop>
+                <stop offset=".8" stop-color="#000" stop-opacity=".3"></stop>
+                <stop offset="1" stop-color="#000" stop-opacity="0"></stop>
+              </radialGradient>
+              <circle
+                transform-origin="center"
+                fill="none"
+                stroke="url(#a12)"
+                stroke-width="15"
+                stroke-linecap="round"
+                stroke-dasharray="200 1000"
+                stroke-dashoffset="0"
+                cx="100"
+                cy="100"
+                r="70"
+              >
+                <animateTransform
+                  type="rotate"
+                  attributeName="transform"
+                  calcMode="spline"
+                  dur="0.8"
+                  values="360;0"
+                  keyTimes="0;1"
+                  keySplines="0 0 1 1"
+                  repeatCount="indefinite"
+                ></animateTransform>
+              </circle>
+              <circle
+                transform-origin="center"
+                fill="none"
+                opacity=".2"
+                stroke="#000"
+                stroke-width="15"
+                stroke-linecap="round"
+                cx="100"
+                cy="100"
+                r="70"
+              ></circle>
+            </svg>
+            <p v-else>Sign in</p>
+          </button>
         </form>
       </div>
       <div class="regstation__sigin">
@@ -52,6 +129,17 @@ const signin = async () => {
   </div>
 </template>
 <style scoped>
+.error {
+  margin: 15px 0 20px;
+  height: 16px;
+  color: red;
+}
+
+.error-password {
+  height: 16px;
+  color: red;
+}
+
 .container {
   padding: 0 100px;
 }

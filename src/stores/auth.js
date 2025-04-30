@@ -40,7 +40,8 @@ export const useAuthStore = defineStore('auth', () => {
         }),
       )
     } catch (err) {
-      switch (err.response.data.error.message) {
+      const errorMessage = err?.response?.data?.error?.message
+      switch (errorMessage) {
         case 'EMAIL_EXISTS':
           error.value = 'Email exists'
           break
@@ -52,6 +53,30 @@ export const useAuthStore = defineStore('auth', () => {
           break
         case 'INVALID_PASSWORD':
           error.value = 'Invalid password'
+          break
+        case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+          error.value = 'Too many attempts, try later'
+          break
+        case 'USER_DISABLED':
+          error.value = 'User disabled'
+          break
+        case 'INVALID_EMAIL':
+          error.value = 'Invalid email'
+          break
+        case 'MISSING_PASSWORD':
+          error.value = 'Missing password'
+          break
+        case 'MISSING_EMAIL':
+          error.value = 'Missing email'
+          break
+        case 'USER_NOT_FOUND':
+          error.value = 'User not found'
+          break
+        case 'INVALID_LOGIN_CREDENTIALS':
+          error.value = 'Invalid login credentials'
+          break
+        case 'WEAK_PASSWORD':
+          error.value = 'password should be at least 6 characters'
           break
         default:
           error.value = 'Error'
