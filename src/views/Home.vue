@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/auth'
 import axiosApiInstance from '@/api'
 
 const singles = ref([])
-
+const loader = ref({})
 const authStore = useAuthStore()
 
 const getSingles = async () => {
@@ -25,6 +25,7 @@ const getSingles = async () => {
   }
 }
 const voteForSong = async (songId) => {
+  loader.value[songId] = true
   try {
     const token = authStore.userInfo.token
     const userId = authStore.userInfo.userId
@@ -54,6 +55,9 @@ const voteForSong = async (songId) => {
     }
   } catch (err) {
     console.error('Error voting for song:', err)
+  } finally {
+    // Выключаем спиннер
+    loader.value[songId] = false
   }
 }
 
@@ -89,8 +93,70 @@ getSingles()
                   {{ sing.name }}
                 </div>
                 <div class="singles__vote">
-                  <p>Голосов: {{ sing.vote }}</p>
-                  <button @click="voteForSong(sing.id)">Голосовать</button>
+                  <p>Votes: {{ sing.vote }}</p>
+                  <button
+                    @click="voteForSong(sing.id)"
+                    class="singles__vote-button"
+                    :disabled="loader(sing.id)"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 200 200"
+                      width="25px"
+                      height="25px"
+                      v-if="loader(sing.id)"
+                    >
+                      <radialGradient
+                        id="a12"
+                        cx=".66"
+                        fx=".66"
+                        cy=".3125"
+                        fy=".3125"
+                        gradientTransform="scale(1.5)"
+                      >
+                        <stop offset="0" stop-color="#fff"></stop>
+                        <stop offset=".3" stop-color="#fff" stop-opacity=".9"></stop>
+                        <stop offset=".6" stop-color="#fff" stop-opacity=".6"></stop>
+                        <stop offset=".8" stop-color="#fff" stop-opacity=".3"></stop>
+                        <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+                      </radialGradient>
+                      <circle
+                        transform-origin="center"
+                        fill="none"
+                        stroke="url(#a12)"
+                        stroke-width="15"
+                        stroke-linecap="round"
+                        stroke-dasharray="200 1000"
+                        stroke-dashoffset="0"
+                        cx="100"
+                        cy="100"
+                        r="70"
+                      >
+                        <animateTransform
+                          type="rotate"
+                          attributeName="transform"
+                          calcMode="spline"
+                          dur="0.8"
+                          values="360;0"
+                          keyTimes="0;1"
+                          keySplines="0 0 1 1"
+                          repeatCount="indefinite"
+                        ></animateTransform>
+                      </circle>
+                      <circle
+                        transform-origin="center"
+                        fill="none"
+                        opacity=".2"
+                        stroke="#fff"
+                        stroke-width="15"
+                        stroke-linecap="round"
+                        cx="100"
+                        cy="100"
+                        r="70"
+                      ></circle>
+                    </svg>
+                    <p v-else>Vote</p>
+                  </button>
                 </div>
               </div>
             </div>
@@ -221,11 +287,20 @@ main {
   }
 }
 
-.slider-button {
-  border-radius: 1px solid #000;
-  border-radius: 4px;
-  background-color: transparent;
-  width: 30px;
+.singles__vote-button {
+  margin: 10px 0;
+  background: #ffffff;
+  border-radius: 5px;
+  width: 90%;
   height: 30px;
+  text-align: center;
+  align-content: center;
+  transition: 0.2s;
+  color: #000000;
+  font-weight: 600;
+}
+.singles__vote-button:hover {
+  background: #00000080;
+  color: #ffffff;
 }
 </style>
