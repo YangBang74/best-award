@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
         JSON.stringify({
           token: userInfo.value.token,
           refreshToken: userInfo.value.refreshToken,
-          userId: userInfo.data.userId, // Сохраняем userId тоже
+          userId: userInfo.value.userId, // Сохраняем userId тоже
         }),
       )
     } catch (err) {

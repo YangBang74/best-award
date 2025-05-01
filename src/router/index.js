@@ -74,9 +74,6 @@ const router = createRouter({
       path: '/vote/vote-best-feat',
       name: 'vote-best-feat',
       component: VoteBestFeat,
-      meta: {
-        auth: true,
-      },
     },
   ],
 })
@@ -85,7 +82,7 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
 
   if (to.meta.auth && !authStore.userInfo.token) {
-    next('/signin')
+    next('/singup')
   } else if (!to.meta.auth && authStore.userInfo.token) {
     next()
   } else {
