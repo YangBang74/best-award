@@ -2,7 +2,7 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <div class="footer__text">yangbang74</div>
+      <div class="footer__text">©2025 Yan Khanov.</div>
     </div>
   </footer>
 </template>
