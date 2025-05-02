@@ -1,6 +1,34 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { fetchTopCharts } from '../js/lastfm.js'
+
+const topTracks = ref([])
+const topAlbums = ref([])
+
+const loadTopCharts = async () => {
+  try {
+    const { topTracks: tracks, topAlbums: albums } = await fetchTopCharts()
+    topTracks.value = tracks
+    topAlbums.value = albums
+    console.log(topAlbums)
+    console.log(topTracks)
+  } catch (error) {
+    console.error('Error loading top charts:', error)
+  }
+}
+
+onMounted(loadTopCharts)
+</script>
 
 <template>
+  <section class="top-tracks">
+    <div class="container">
+      <h1 class="section-title">Top Tracks</h1>
+      <ul>
+        <li v-for="track in topTracks" :key="track.name">{{ track.artist }} — {{ track.name }}</li>
+      </ul>
+    </div>
+  </section>
   <section class="hero">
     <div class="container">
       <div class="hero__wrap">
