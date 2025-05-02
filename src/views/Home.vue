@@ -71,6 +71,26 @@ getDates('album', albums, '.glide-albums')
       </div>
     </div>
   </section>
+  <section class="about">
+    <div class="container">
+      <div class="about__body">
+        <div class="about__img">
+          <img src="/about-bg.png" alt="music discket" />
+        </div>
+        <div class="about__text">
+          <h1 class="section-title">About Us</h1>
+          <div class="about__body-text">
+            <p>
+              We’re a music community where your vote picks the best songs and albums. Vote daily,
+              watch rankings update live, and help shape a chart made by real listeners — not just
+              sales or streams. Discover new artists, support your favorites, and be part of a
+              movement that celebrates true musical talent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="songs">
     <div class="container">
       <div class="singles">
@@ -126,46 +146,6 @@ getDates('album', albums, '.glide-albums')
 </template>
 
 <style scoped>
-.glide {
-  position: relative;
-  width: 100%;
-}
-.glide__track {
-  overflow: hidden;
-}
-.glide__slides {
-  position: relative;
-  display: flex;
-}
-.glide__slide {
-  flex: 0 0 auto;
-  width: 10px;
-  padding: 10px;
-}
-.glide__arrows {
-  position: absolute;
-  top: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  z-index: 10;
-}
-.glide__arrows button {
-  height: 362px;
-  background: rgba(0, 0, 0);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  font-size: 2rem;
-  transition: background 0.2s;
-  opacity: 0.1;
-  transition: 0.4s;
-}
-
-.glide__arrows button:hover {
-  opacity: 0.8;
-}
 .hero {
   width: 100%;
   height: 500px;
@@ -218,11 +198,45 @@ getDates('album', albums, '.glide-albums')
   background: rgba(0, 0, 0, 0.5);
 }
 
+.about {
+  margin: 50px 0;
+}
+
+.about__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.about__text {
+  width: 50%;
+  h1 {
+    text-align-last: left;
+  }
+}
+
+.about__body-text {
+  font-size: 20px;
+  line-height: 200%;
+}
+
+.about__img {
+  width: 50%;
+}
+
+.about__img img {
+  max-width: 600px;
+  width: 100%;
+}
+
 .songs {
   margin: 50px 0;
 }
 
-.songs-title {
+.songs-title,
+.section-title {
+  font-family: var(--second-font);
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 20px;
@@ -232,6 +246,7 @@ getDates('album', albums, '.glide-albums')
 .singles__block {
   position: relative;
   width: 100%;
+  max-width: 400px;
 }
 
 .singles__about {
@@ -262,7 +277,53 @@ getDates('album', albums, '.glide-albums')
 
 .singles,
 .albums {
-  height: 450px;
+  height: 500px;
+}
+
+.glide {
+  position: relative;
+  width: 100%;
+}
+.glide__track {
+  overflow: hidden;
+}
+.glide__slides {
+  position: relative;
+  display: flex;
+}
+.glide__slide {
+  flex: 0 0 auto;
+  width: 10px;
+  padding: 10px;
+}
+.glide__arrows {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+.glide__arrows button {
+  height: 442px;
+  background: rgba(0, 0, 0);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+  opacity: 0.1;
+  transition: 0.4s;
+}
+
+.glide__arrows button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 1048px) {
+  .about__body-text {
+    line-height: 150%;
+  }
 }
 
 @media (max-width: 768px) {

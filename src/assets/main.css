@@ -8,6 +8,8 @@
   --button-background: #000000;
   --button-text: #ffffff;
   --button-hover: #00000080;
+  --base-font: 'Roboto Slab', sans-serif;
+  --second-font: 'Special Gothic Expanded One', sans-serif;
 }
 
 .wrapper {
@@ -27,7 +29,6 @@
     padding: 0 20px;
   }
 }
-
 
 a,
 button {
