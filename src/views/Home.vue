@@ -1,188 +1,182 @@
 <script setup>
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { ref, nextTick } from 'vue'
 import axiosApiInstance from '@/api'
+import Glide from '@glidejs/glide'
 
 const singles = ref([])
-const loader = ref({})
-const authStore = useAuthStore()
+const albums = ref([])
+let glideInstances = {}
+const loader = ref(false)
 
-const getSingles = async () => {
+const initGlide = async (selector) => {
+  try {
+    if (glideInstances[selector]) {
+      glideInstances[selector].destroy()
+      glideInstances[selector] = null
+    }
+    await nextTick()
+    glideInstances[selector] = new Glide(selector, {
+      type: 'carousel',
+      perView: 4,
+      gap: 10,
+      autoplay: false,
+      hoverpause: true,
+      breakpoints: {
+        1456: { perView: 3 },
+        1136: { perView: 2 },
+        650: { perView: 1, focusAt: 'center' },
+      },
+    }).mount()
+  } catch (e) {
+    console.error(`Glide init failed for ${selector}:`, e)
+  }
+}
+
+const getDates = async (dbName, targetRef, selector) => {
+  loader.value = true
   try {
     const response = await axiosApiInstance.get(
-      'https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles.json',
+      `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/${dbName}.json`,
     )
-    singles.value = Object.entries(response.data).map(([key, item]) => ({
+    targetRef.value = Object.entries(response.data).map(([key, item]) => ({
       id: key,
       name: item.name,
       author: item.author,
       src: item.src,
       vote: item.vote,
     }))
+    await initGlide(selector)
   } catch (err) {
-    console.error('Error fetching singles:', err)
-  }
-}
-const voteForSong = async (songId) => {
-  loader.value[songId] = true
-  try {
-    const token = authStore.userInfo.token
-    const userId = authStore.userInfo.userId
-    if (!token || !userId) {
-      console.log('User not authenticated')
-      return
-    }
-    const song = singles.value.find((sing) => sing.id === songId)
-
-    if (song) {
-      if (!song.voters) {
-        song.voters = {}
-      }
-      if (song.voters[userId]) {
-        console.log('You have already voted for this song.')
-        return
-      }
-      await axiosApiInstance.patch(
-        `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles/${songId}.json`,
-        {
-          vote: song.vote + 1,
-          voters: { ...song.voters, [userId]: true },
-        },
-      )
-      song.vote += 1
-      song.voters[userId] = true
-    }
-  } catch (err) {
-    console.error('Error voting for song:', err)
+    console.error(`Error fetching ${dbName}:`, err)
   } finally {
-    // Выключаем спиннер
-    loader.value[songId] = false
+    loader.value = false
   }
 }
 
-getSingles()
+getDates('singles', singles, '.glide-singles')
+getDates('album', albums, '.glide-albums')
 </script>
+
 <template>
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="hero__wrap">
-          <div class="hero__content">
-            <h1 class="hero__content-title">choose the best</h1>
-            <div class="hero__content-text">
-              <p>Vote for the best, reward for the best</p>
-            </div>
-            <router-link to="/vote" class="hero__content-button"> Vote Now </router-link>
+  <section class="hero">
+    <div class="container">
+      <div class="hero__wrap">
+        <div class="hero__content">
+          <h1 class="hero__content-title">choose the best</h1>
+          <div class="hero__content-text">
+            <p>Vote for the best, reward for the best</p>
           </div>
+          <router-link to="/vote" class="hero__content-button"> Vote Now </router-link>
         </div>
       </div>
-    </section>
-    <section class="songs">
-      <div class="container">
+    </div>
+  </section>
+  <section class="songs">
+    <div class="container">
+      <div class="singles">
         <h1 class="songs-title">Best Singles</h1>
-        <div class="slider">
-          <div class="slides">
-            <div class="singles__block" v-for="sing in singles" :key="sing.id">
-              <div class="singles__block-img">
-                <img :src="sing.src" :alt="sing.name" />
-              </div>
-              <div class="singles__about">
-                <div class="singles__about-title">
-                  <p>{{ sing.author }}</p>
-                  {{ sing.name }}
+        <div class="glide glide-singles">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              <li class="glide__slide" v-for="sing in singles" :key="sing.id">
+                <div class="singles__block">
+                  <div class="singles__block-img">
+                    <img :src="sing.src" :alt="sing.name" loading="lazy" />
+                  </div>
+                  <div class="singles__about">
+                    <p>{{ sing.author }}</p>
+                    <p>{{ sing.name }}</p>
+                  </div>
                 </div>
-                <div class="singles__vote">
-                  <p>Votes: {{ sing.vote }}</p>
-                  <button
-                    @click="voteForSong(sing.id)"
-                    class="singles__vote-button"
-                    :disabled="loader(sing.id)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 200 200"
-                      width="25px"
-                      height="25px"
-                      v-if="loader(sing.id)"
-                    >
-                      <radialGradient
-                        id="a12"
-                        cx=".66"
-                        fx=".66"
-                        cy=".3125"
-                        fy=".3125"
-                        gradientTransform="scale(1.5)"
-                      >
-                        <stop offset="0" stop-color="#fff"></stop>
-                        <stop offset=".3" stop-color="#fff" stop-opacity=".9"></stop>
-                        <stop offset=".6" stop-color="#fff" stop-opacity=".6"></stop>
-                        <stop offset=".8" stop-color="#fff" stop-opacity=".3"></stop>
-                        <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
-                      </radialGradient>
-                      <circle
-                        transform-origin="center"
-                        fill="none"
-                        stroke="url(#a12)"
-                        stroke-width="15"
-                        stroke-linecap="round"
-                        stroke-dasharray="200 1000"
-                        stroke-dashoffset="0"
-                        cx="100"
-                        cy="100"
-                        r="70"
-                      >
-                        <animateTransform
-                          type="rotate"
-                          attributeName="transform"
-                          calcMode="spline"
-                          dur="0.8"
-                          values="360;0"
-                          keyTimes="0;1"
-                          keySplines="0 0 1 1"
-                          repeatCount="indefinite"
-                        ></animateTransform>
-                      </circle>
-                      <circle
-                        transform-origin="center"
-                        fill="none"
-                        opacity=".2"
-                        stroke="#fff"
-                        stroke-width="15"
-                        stroke-linecap="round"
-                        cx="100"
-                        cy="100"
-                        r="70"
-                      ></circle>
-                    </svg>
-                    <p v-else>Vote</p>
-                  </button>
-                </div>
-              </div>
-            </div>
+              </li>
+            </ul>
+          </div>
+          <div class="glide__arrows" data-glide-el="controls" v-if="singles.length">
+            <button data-glide-dir="<">‹</button>
+            <button data-glide-dir=">">›</button>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="albums">
+        <h1 class="songs-title">Best Albums</h1>
+        <div class="glide glide-albums">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              <li class="glide__slide" v-for="album in albums" :key="album.id">
+                <div class="singles__block">
+                  <div class="singles__block-img">
+                    <img :src="album.src" :alt="album.name" loading="lazy" />
+                  </div>
+                  <div class="singles__about">
+                    <p>{{ album.author }}</p>
+                    <p>{{ album.name }}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="glide__arrows" data-glide-el="controls" v-if="albums.length">
+            <button data-glide-dir="<">‹</button>
+            <button data-glide-dir=">">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
-main {
-  height: 100vh;
+.glide {
+  position: relative;
+  width: 100%;
+}
+.glide__track {
+  overflow: hidden;
+}
+.glide__slides {
+  position: relative;
+  display: flex;
+}
+.glide__slide {
+  flex: 0 0 auto;
+  width: 10px;
+  padding: 10px;
+}
+.glide__arrows {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+.glide__arrows button {
+  height: 362px;
+  background: rgba(0, 0, 0);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+  transition: background 0.2s;
+  opacity: 0.1;
+  transition: 0.4s;
+}
+
+.glide__arrows button:hover {
+  opacity: 0.8;
 }
 .hero {
   width: 100%;
   height: 500px;
   display: flex;
-  background: url('/hero/hero-bg.svg') no-repeat -100px 0 / cover;
+  background: url('/hero/hero-bg.svg') no-repeat center center / cover;
 }
 
 .hero__wrap {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 30px;
+  width: 100%;
 }
 
 .hero__content {
@@ -192,7 +186,7 @@ main {
 }
 
 .hero__content-title {
-  font-size: 2.5rem;
+  font-size: 3rem;
   text-transform: uppercase;
   font-family: 'Special Gothic Expanded One', sans-serif;
   font-weight: 700;
@@ -200,11 +194,6 @@ main {
 
 .hero__content-text {
   margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-items: left;
-  gap: 10px;
 }
 
 .hero__content-text p {
@@ -213,94 +202,84 @@ main {
 }
 
 .hero__content-button {
-  background: #000000;
+  background: #000;
   margin-top: 20px;
   border-radius: 5px;
   width: 150px;
-  height: 40px;
+  padding: 10px 0;
   text-align: center;
-  align-content: center;
-  transition: 0.2s;
-  color: #ffffff;
+  transition: background 0.2s;
+  color: #fff;
   font-weight: 600;
   font-size: 1rem;
 }
 
 .hero__content-button:hover {
-  background: #00000080;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .songs {
   margin: 50px 0;
 }
 
-.slider {
-  position: relative;
-  overflow-x: auto;
-  width: 100%; /* Ширина слайдера */
-  height: 450px; /* Высота слайдера */
-}
-
-.slides {
-  width: 300px;
-  display: flex;
-  gap: 30px;
-  transition: transform 0.5s ease;
-}
-
-.slider {
-  margin: 30px 0;
-}
-
 .songs-title {
-  font-size: 48px;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .singles__block {
   position: relative;
+  width: 100%;
 }
 
 .singles__about {
   border-radius: 0 0 5px 5px;
   background-color: #000;
-  padding: 10px 0 10px 15px;
+  padding: 10px 15px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 14px;
   color: #fff;
-}
-
-.singles__about p {
-  margin-bottom: 3px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 180px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .singles__block-img {
-  width: 200px;
-  height: 200px;
-  img {
-    border-radius: 5px 5px 0 0;
-    height: 100%;
-    width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.singles__block-img img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  height: auto;
+}
+
+.albums {
+  margin: 50px 0;
+}
+
+.singles,
+.albums {
+  height: 450px;
+}
+
+@media (max-width: 768px) {
+  .hero__content-title {
+    font-size: 2rem;
+  }
+  .songs-title {
+    font-size: 2rem;
   }
 }
 
-.singles__vote-button {
-  margin: 10px 0;
-  background: #ffffff;
-  border-radius: 5px;
-  width: 90%;
-  height: 30px;
-  text-align: center;
-  align-content: center;
-  transition: 0.2s;
-  color: #000000;
-  font-weight: 600;
-}
-.singles__vote-button:hover {
-  background: #00000080;
-  color: #ffffff;
+@media (max-width: 480px) {
+  .hero__content-title {
+    font-size: 1.5rem;
+  }
+  .songs-title {
+    font-size: 1.5rem;
+  }
 }
 </style>

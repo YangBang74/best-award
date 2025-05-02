@@ -1,1 +1,0 @@
-<template>Vote Song</template>

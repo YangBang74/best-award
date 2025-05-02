@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/AboutView.vue'
-import SignIn from '../views/Sign/SignIn.vue'
-import SignUp from '../views/Sign/SignUp.vue'
-import Vote from '../views/Vote/Vote.vue'
-import VoteBestFeat from '../views/Vote/VoteBestFeat.vue'
-import VoteBestAlbum from '../views/Vote/VoteBestAlbum.vue'
-import VoteBestSong from '../views/Vote/VoteBestSong.vue'
-import Profile from '../views/Profile.vue'
+import SignIn from '@/views/Sign/SignIn.vue'
+import SignUp from '@/views/Sign/SignUp.vue'
+import Awards from '@/views/Awards/Awards.vue'
+import BestAlbum from '@/views/Awards/BestAlbum.vue'
+import BestSinger from '@/views/Awards/BestSinger.vue'
+import BestSong from '@/views/Awards/BestSong.vue'
+import Profile from '@/views/Profile.vue'
 
 import { useAuthStore } from '../stores/auth'
 
@@ -49,31 +49,31 @@ const router = createRouter({
       },
     },
     {
-      path: '/vote',
-      name: 'vote',
-      component: Vote,
+      path: '/awards',
+      name: 'awards',
+      component: Awards,
     },
     {
-      path: '/vote/vote-best-album',
-      name: 'vote-best-album',
-      component: VoteBestAlbum,
+      path: '/awards/best-album',
+      name: 'best-album',
+      component: BestAlbum,
       meta: {
         auth: true,
       },
     },
 
     {
-      path: '/vote/vote-best-song',
-      name: 'vote-best-song',
-      component: VoteBestSong,
+      path: '/awrards/best-song',
+      name: 'best-song',
+      component: BestSong,
       meta: {
         auth: true,
       },
     },
     {
-      path: '/vote/vote-best-feat',
-      name: 'vote-best-feat',
-      component: VoteBestFeat,
+      path: '/awards/best-singer',
+      name: 'best-singer',
+      component: BestSinger,
     },
   ],
 })

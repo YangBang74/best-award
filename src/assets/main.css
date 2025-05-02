@@ -10,10 +10,24 @@
   --button-hover: #00000080;
 }
 
-body {
+.wrapper {
+  font-family: 'Roboto Slab', sans-serif;
+  color: #000;
+  font-weight: 400;
   background-color: var(--background-color);
   color: var(--text-color);
 }
+
+.container {
+  padding: 0 75px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
 
 a,
 button {

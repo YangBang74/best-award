@@ -26,7 +26,7 @@ const passwordLengthStatus = computed(() => {
 
 const signup = async () => {
   await authStore.auth({ email: email.value, password: password.value }, 'signup')
-  router.push('/vote')
+  router.push('/')
 }
 </script>
 
