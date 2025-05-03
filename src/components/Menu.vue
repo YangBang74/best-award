@@ -84,7 +84,7 @@ const logout = () => {
   </header>
 </template>
 
-<style scoped>
+<style lang="css" scoped>
 body.lock {
   overflow: hidden;
 }
@@ -95,7 +95,6 @@ body.lock {
   background-color: #ffffff;
   z-index: 50;
   border-bottom: 1px solid #dddcdc;
-  height: 55px;
   transition: 0.2s;
 }
 
@@ -103,7 +102,7 @@ body.lock {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  column-gap: 20px;
   div {
     padding: 10px 0;
   }
@@ -122,7 +121,7 @@ body.lock {
   a {
     color: #000000;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding: 15px 0;
     font-family: 'Inter', sans-serif;
   }
@@ -141,6 +140,15 @@ body.lock {
   display: flex;
   align-items: center;
   gap: 20px;
+  a {
+    color: #000000;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+  }
+  a:hover {
+    color: #646464;
+  }
 }
 
 .header__burger {
