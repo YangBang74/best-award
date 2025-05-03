@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import axiosApiInstance from '@/api'
 
 const authStore = useAuthStore()
 

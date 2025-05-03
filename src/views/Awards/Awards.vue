@@ -106,7 +106,7 @@ getDates('album', albums, '.glide-albums')
         <div class="glide__track" data-glide-el="track">
           <ul class="glide__slides">
             <li class="glide__slide" v-for="sing in singers" :key="sing.id">
-              <div class="singles__block">
+              <a href="/awards/best-singer" class="singles__block">
                 <div class="singles__block-img">
                   <img :src="sing.src" :alt="sing.name" loading="lazy" />
                 </div>
@@ -114,7 +114,7 @@ getDates('album', albums, '.glide-albums')
                   <p>{{ sing.author }}</p>
                   <p>{{ sing.name }}</p>
                 </div>
-              </div>
+              </a>
             </li>
           </ul>
         </div>
@@ -172,7 +172,7 @@ getDates('album', albums, '.glide-albums')
         <div class="glide__track" data-glide-el="track">
           <ul class="glide__slides">
             <li class="glide__slide" v-for="sing in singles" :key="sing.id">
-              <div class="singles__block">
+              <a href="/awards/best-song" class="singles__block">
                 <div class="singles__block-img">
                   <img :src="sing.src" :alt="sing.name" loading="lazy" />
                 </div>
@@ -180,7 +180,7 @@ getDates('album', albums, '.glide-albums')
                   <p>{{ sing.author }}</p>
                   <p>{{ sing.name }}</p>
                 </div>
-              </div>
+              </a>
             </li>
           </ul>
         </div>
