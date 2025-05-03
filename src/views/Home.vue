@@ -1,34 +1,44 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { fetchTopCharts } from '../js/lastfm.js'
+import { ref } from 'vue'
+import axios from 'axios'
 
 const topTracks = ref([])
-const topAlbums = ref([])
+const topArtists = ref([])
 
-const loadTopCharts = async () => {
+const apiKey = import.meta.env.VITE_LASTFM_API_KEY
+
+const getTopTracks = async () => {
   try {
-    const { topTracks: tracks, topAlbums: albums } = await fetchTopCharts()
-    topTracks.value = tracks
-    topAlbums.value = albums
-    console.log(topAlbums)
-    console.log(topTracks)
+    const response = await axios.get(
+      `https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${apiKey}&format=json`,
+    )
+    topTracks.value = response.data.tracks.track
   } catch (error) {
-    console.error('Error loading top charts:', error)
+    console.error('Error fetching top tracks:', error)
   }
 }
 
-onMounted(loadTopCharts)
+const getTopArtists = async () => {
+  try {
+    const response = await axios.get(
+      `https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${apiKey}&format=json`,
+    )
+    topArtists.value = response.data.artists.artist
+  } catch (error) {
+    console.error('Error fetching top tracks:', error)
+  }
+}
+
+getTopArtists()
+getTopTracks()
+
+const formatter = new Intl.NumberFormat('en', {
+  notation: 'compact',
+  compactDisplay: 'short',
+})
 </script>
 
 <template>
-  <section class="top-tracks">
-    <div class="container">
-      <h1 class="section-title">Top Tracks</h1>
-      <ul>
-        <li v-for="track in topTracks" :key="track.name">{{ track.artist }} — {{ track.name }}</li>
-      </ul>
-    </div>
-  </section>
   <section class="hero">
     <div class="container">
       <div class="hero__wrap">
@@ -46,7 +56,7 @@ onMounted(loadTopCharts)
     <div class="container">
       <div class="about__body">
         <div class="about__img">
-          <img src="/about-bg.png" alt="music discket" />
+          <img src="/about.png" alt="music discket" />
         </div>
         <div class="about__text">
           <h1 class="section-title">About Us</h1>
@@ -62,6 +72,57 @@ onMounted(loadTopCharts)
       </div>
     </div>
   </section>
+  <div class="awards">
+    <div class="container">
+      <h1 class="section-title">Awards</h1>
+      <div class="awards__body">
+        <a href="/awrards/best-song" class="awards__body-block">
+          <p>BEST SONG ON YEAR</p>
+        </a>
+        <a href="/awards/best-album" class="awards__body-block">
+          <p>BEST MUSIC ALBUM ON YEAR</p>
+        </a>
+        <a href="/awards/best-singer" class="awards__body-block">
+          <p>BEST SINGER ON YEAR</p>
+        </a>
+      </div>
+    </div>
+  </div>
+  <section class="chart">
+    <div class="container">
+      <h1 class="section-title">Top on World</h1>
+      <div class="chart__body">
+        <ul class="top__list">
+          <div class="top__list-title">Top Tracks</div>
+          <li v-for="(track, index) in topTracks.slice(0, 10)" :key="track.name" class="top__item">
+            <div class="top__item-num">
+              <span>{{ index + 1 }}. </span>
+            </div>
+            <div class="top__item-decrip">
+              <p>{{ track.artist.name }} — {{ track.name }}</p>
+              <p>Listen: {{ formatter.format(track.playcount) }}</p>
+            </div>
+          </li>
+        </ul>
+        <ul class="top__list">
+          <div class="top__list-title">Top Artists</div>
+          <li
+            v-for="(artist, index) in topArtists.slice(0, 10)"
+            :key="artist.name"
+            class="top__item"
+          >
+            <div class="top__item-num">
+              <span>{{ index + 1 }}. </span>
+            </div>
+            <div class="top__item-decrip">
+              <p>{{ artist.name }} — Folowers: {{ formatter.format(artist.listeners) }}</p>
+              <p>Listen: {{ formatter.format(artist.playcount) }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
   <section class="recomend">
     <div class="container">
       <h1 class="section-title">We recommend</h1>
@@ -71,8 +132,8 @@ onMounted(loadTopCharts)
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
-            width="100"
-            height="100"
+            width="50"
+            height="50"
             viewBox="0 0 50 50"
           >
             <path
@@ -92,8 +153,8 @@ onMounted(loadTopCharts)
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
-            width="100"
-            height="100"
+            width="50"
+            height="50"
             viewBox="0 0 48 48"
           >
             <path
@@ -111,8 +172,8 @@ onMounted(loadTopCharts)
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
-            width="100"
-            height="100"
+            width="50"
+            height="50"
             viewBox="0 0 48 48"
           >
             <linearGradient
@@ -154,8 +215,8 @@ onMounted(loadTopCharts)
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
-            width="100"
-            height="100"
+            width="50"
+            height="50"
             viewBox="0 0 48 48"
           >
             <linearGradient
@@ -180,8 +241,8 @@ onMounted(loadTopCharts)
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
-            width="100"
-            height="100"
+            width="50"
+            height="50"
             viewBox="0 0 48 48"
           >
             <rect width="8" height="5" x="3" y="33" fill="#f98613"></rect>
@@ -201,7 +262,7 @@ onMounted(loadTopCharts)
   </section>
 </template>
 
-<style scoped>
+<style lang="css" scoped>
 .hero {
   width: 100%;
   height: 500px;
@@ -286,12 +347,37 @@ onMounted(loadTopCharts)
 }
 
 .about__img {
+  text-align: center;
   width: 50%;
 }
 
 .about__img img {
-  max-width: 600px;
+  max-width: 500px;
   width: 100%;
+}
+
+.awards {
+  margin: 50px 0;
+}
+
+.awards__body {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  row-gap: 40px;
+}
+
+.awards__body-block {
+  font-weight: 600;
+  padding: 18px 0;
+  border-radius: 30px 0 30px 0;
+  border: 1px solid #000;
+  background: url('/award.png') no-repeat center 18px / contain;
+  height: 100px;
+  min-width: 300px;
+  text-align: center;
 }
 
 .recomend {
@@ -300,14 +386,60 @@ onMounted(loadTopCharts)
 
 .recomend__body {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   gap: 40px;
 }
 
+.recomend__body a svg {
+  width: 75px;
+  height: 75px;
+}
+
+.chart {
+  margin: 50px 0;
+}
+
+.chart__body {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.top__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 35%;
+}
+
+.top__list-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.top__item {
+  padding: 10px;
+  max-width: 350px;
+  background-color: #e9e9e9;
+  border-radius: 10px;
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+}
+
+.top__item:nth-child(2n) {
+  background-color: #ffd8d8;
+}
 @media (max-width: 1048px) {
   .about__body-text {
     line-height: 150%;
+  }
+  .chart__body {
+    justify-content: start;
+  }
+  .top__list {
+    width: 100%;
   }
 }
 
@@ -317,6 +449,26 @@ onMounted(loadTopCharts)
   }
   .section-title {
     font-size: 2rem;
+  }
+  .about__body {
+    flex-direction: column-reverse;
+  }
+  .about__text {
+    width: 100%;
+  }
+  .about__img {
+    width: 100%;
+  }
+  .chart__body {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .top__list {
+    width: auto;
+    margin: 0 auto;
+  }
+  .top__item {
+    width: 100vh;
   }
 }
 
