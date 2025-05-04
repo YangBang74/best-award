@@ -17,17 +17,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: () => import('@/views/Home.vue'),
     },
     {
       path: '/about',
       name: 'about',
-      component: About,
+      component: () => import('@/views/AboutView.vue'),
     },
     {
       path: '/signin',
       name: 'signin',
-      component: SignIn,
+      component: () => import('@/views/Sign/SignIn.vue'),
       meta: {
         auth: false,
       },
@@ -35,7 +35,7 @@ const router = createRouter({
     {
       path: '/signup',
       name: 'signup',
-      component: SignUp,
+      component: () => import('@/views/Sign/SignUp.vue'),
       meta: {
         auth: false,
       },
@@ -43,7 +43,7 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile,
+      component: () => import('@/views/Profile.vue'),
       meta: {
         auth: true,
       },
@@ -51,12 +51,12 @@ const router = createRouter({
     {
       path: '/awards',
       name: 'awards',
-      component: Awards,
+      component: () => import('@/views/Awards/Awards.vue'),
     },
     {
       path: '/awards/best-album',
       name: 'best-album',
-      component: BestAlbum,
+      component: () => import('@/views/Awards/BestAlbum.vue'),
       meta: {
         auth: true,
       },
@@ -65,7 +65,7 @@ const router = createRouter({
     {
       path: '/awrards/best-song',
       name: 'best-song',
-      component: BestSong,
+      component: () => import('@/views/Awards/BestSong.vue'),
       meta: {
         auth: true,
       },
@@ -73,7 +73,7 @@ const router = createRouter({
     {
       path: '/awards/best-singer',
       name: 'best-singer',
-      component: BestSinger,
+      component: () => import('@/views/Awards/BestSinger.vue'),
     },
   ],
 })
