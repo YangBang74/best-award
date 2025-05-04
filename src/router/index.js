@@ -54,7 +54,7 @@ const router = createRouter({
     },
 
     {
-      path: '/awrards/best-song',
+      path: '/awards/best-song',
       name: 'best-song',
       component: () => import('@/views/Awards/BestSong.vue'),
       meta: {

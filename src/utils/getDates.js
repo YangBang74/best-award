@@ -12,6 +12,7 @@ export const getDates = async (dbName) => {
       about: item.about,
       src: item.src,
       vote: item.vote,
+      voters: item.voters || {},
     }))
     return result
   } catch (err) {

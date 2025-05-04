@@ -4,31 +4,17 @@ import ButtonLoader from '@/components/icons/ButtonLoader.vue'
 import { ref, reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import axiosApiInstance from '@/api'
+import { getDates } from '@/utils/getDates'
 
 const authStore = useAuthStore()
 
 const singers = ref([])
 const loader = reactive({})
+const dateLoad = ref(true)
 
-const getDates = async (dbName, targetRef) => {
-  try {
-    const response = await axiosApiInstance.get(
-      `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/${dbName}.json`,
-    )
-    targetRef.value = Object.entries(response.data).map(([key, item]) => ({
-      id: key,
-      name: item.name,
-      about: item.about,
-      src: item.src,
-      vote: item.vote,
-    }))
-    console.log(singers.value)
-  } catch (err) {
-    console.error(`Error fetching ${dbName}:`, err)
-  } finally {
-    loader.value = false
-  }
-}
+Promise.all([getDates('singers').then((data) => (singers.value = data))]).then(() => {
+  dateLoad.value = false
+})
 
 const voteForSinger = async (singer) => {
   loader[singer.id] = true
@@ -65,12 +51,13 @@ const voteForSinger = async (singer) => {
     loader[singer.id] = false
   }
 }
-
-getDates('singers', singers)
 </script>
 
 <template>
-  <section class="singers">
+  <div class="loader" v-if="dateLoad">
+    <div class="loader-item"></div>
+  </div>
+  <section class="singers" v-if="singers.length">
     <div class="container">
       <div class="singers__wrap">
         <h1 class="singers-title">
@@ -100,7 +87,7 @@ getDates('singers', singers)
         </div>
       </div>
     </div>
-    <a href="/awards" class="singers__back">
+    <a href="javascript:history.back()" class="singers__back">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -244,5 +231,59 @@ getDates('singers', singers)
 .singers__back svg {
   width: 40px;
   height: 40px;
+}
+
+.loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-item {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #04346b;
+  animation:
+    l20-1 0.8s infinite linear alternate,
+    l20-2 1.6s infinite linear;
+}
+@keyframes l20-1 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  }
+  12.5% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+  }
+  62.5% {
+    clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+  }
+}
+@keyframes l20-2 {
+  0% {
+    transform: scaleY(1) rotate(0deg);
+  }
+  49.99% {
+    transform: scaleY(1) rotate(135deg);
+  }
+  50% {
+    transform: scaleY(-1) rotate(0deg);
+  }
+  100% {
+    transform: scaleY(-1) rotate(-135deg);
+  }
 }
 </style>
