@@ -1,13 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import About from '../views/AboutView.vue'
-import SignIn from '@/views/Sign/SignIn.vue'
-import SignUp from '@/views/Sign/SignUp.vue'
-import Awards from '@/views/Awards/Awards.vue'
-import BestAlbum from '@/views/Awards/BestAlbum.vue'
-import BestSinger from '@/views/Awards/BestSinger.vue'
-import BestSong from '@/views/Awards/BestSong.vue'
-import Profile from '@/views/Profile.vue'
 
 import { useAuthStore } from '../stores/auth'
 
