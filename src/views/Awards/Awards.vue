@@ -1,15 +1,14 @@
 <script setup>
 import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
-
+import { getDates } from '@/utils/getDates'
 import { ref, nextTick } from 'vue'
-import axiosApiInstance from '@/api'
 import Glide from '@glidejs/glide'
 
 const singles = ref([])
 const albums = ref([])
 const singers = ref([])
 let glideInstances = {}
-const loader = ref(false)
+const loader = ref(true)
 
 const initGlide = async (selector) => {
   try {
@@ -35,31 +34,13 @@ const initGlide = async (selector) => {
   }
 }
 
-const getDates = async (dbName, targetRef, selector) => {
-  loader.value = true
-  try {
-    const response = await axiosApiInstance.get(
-      `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/${dbName}.json`,
-    )
-    targetRef.value = Object.entries(response.data).map(([key, item]) => ({
-      id: key,
-      name: item.name,
-      author: item.author,
-      src: item.src,
-      vote: item.vote,
-    }))
-    console.log(singles.value)
-
-    await initGlide(selector)
-  } catch (err) {
-    console.error(`Error fetching ${dbName}:`, err)
-  } finally {
-    loader.value = false
-  }
-}
-getDates('singers', singers, '.glide-singers')
-getDates('singles', singles, '.glide-singles')
-getDates('album', albums, '.glide-albums')
+Promise.all([
+  getDates('singers').then((data) => ((singers.value = data), initGlide('.glide-singers'))),
+  getDates('singles').then((data) => ((singles.value = data), initGlide('.glide-singles'))),
+  getDates('album').then((data) => ((albums.value = data), initGlide('.glide-albums'))),
+]).then(() => {
+  loader.value = false
+})
 </script>
 
 <template>
