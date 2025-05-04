@@ -3,11 +3,11 @@ import { getDatabase } from 'firebase/database'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: 'award-vue.firebaseapp.com',
-  projectId: 'award-vue',
-  storageBucket: 'award-vue.firebasestorage.app',
-  messagingSenderId: '345191953083',
-  appId: '1:345191953083:web:2ccc7a7e3837e4b61daf9e',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 const app = initializeApp(firebaseConfig)
