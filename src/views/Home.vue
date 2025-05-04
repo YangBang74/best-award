@@ -25,6 +25,7 @@ const getTopArtists = async () => {
       `https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${apiKey}&format=json`,
     )
     topArtists.value = response.data.artists.artist
+    console.log(topArtists.value)
   } catch (error) {
     console.error('Error fetching top tracks:', error)
   }
@@ -96,9 +97,15 @@ const formatter = new Intl.NumberFormat('en', {
     <div class="container">
       <h1 class="section-title">Top on World</h1>
       <div class="chart__body">
-        <ul class="top__list">
+        <div class="top__list">
           <div class="top__list-title">Top Tracks</div>
-          <li v-for="(track, index) in topTracks.slice(0, 10)" :key="track.name" class="top__item">
+          <a
+            v-for="(track, index) in topTracks.slice(0, 10)"
+            :key="track.name"
+            class="top__item"
+            :href="track.url"
+            target="_blank"
+          >
             <div class="top__item-num">
               <span>{{ index + 1 }}. </span>
             </div>
@@ -106,13 +113,15 @@ const formatter = new Intl.NumberFormat('en', {
               <p>{{ track.artist.name }} — {{ track.name }}</p>
               <p>Listen: {{ formatter.format(track.playcount) }}</p>
             </div>
-          </li>
-        </ul>
-        <ul class="top__list">
+          </a>
+        </div>
+        <div class="top__list">
           <div class="top__list-title">Top Artists</div>
-          <li
+          <a
             v-for="(artist, index) in topArtists.slice(0, 10)"
             :key="artist.name"
+            :href="artist.url"
+            target="_blank"
             class="top__item"
           >
             <div class="top__item-num">
@@ -122,8 +131,8 @@ const formatter = new Intl.NumberFormat('en', {
               <p>{{ artist.name }} — Folowers: {{ formatter.format(artist.listeners) }}</p>
               <p>Listen: {{ formatter.format(artist.playcount) }}</p>
             </div>
-          </li>
-        </ul>
+          </a>
+        </div>
       </div>
     </div>
   </section>

@@ -1,5 +1,6 @@
 <script setup>
 import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
+import BackButton from '@/components/UI/BackButton.vue'
 import { getDates } from '@/utils/getDates'
 import { ref, nextTick } from 'vue'
 import Glide from '@glidejs/glide'
@@ -136,6 +137,7 @@ Promise.all([
       </div>
     </section>
   </div>
+  <BackButton />
 </template>
 <style scoped>
 section {
