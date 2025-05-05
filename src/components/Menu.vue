@@ -1,18 +1,15 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
+const menuActive = ref(false)
 
 const toggleMenu = () => {
-  const burger = document.querySelector('.header__burger')
-  const menu = document.querySelector('.header__menu')
-  const body = document.querySelector('body')
-  body.classList.toggle('lock')
-  burger.classList.toggle('active')
-  menu.classList.toggle('active')
+  menuActive.value = !menuActive.value
+  document.body.classList.toggle('lock')
 }
 
 const router = useRouter()
@@ -39,7 +36,7 @@ const logout = () => {
     <div class="container">
       <div class="header__wrap">
         <a class="header__logo" href="/">Best.Award</a>
-        <nav class="header__menu">
+        <nav class="header__menu" :class="{ active: menuActive }">
           <a href="/">Home</a>
           <a href="/Awards">Awards</a>
           <a href="/The-Best">The Best</a>
@@ -73,7 +70,12 @@ const logout = () => {
           <router-link class="menu__link" to="/signin" v-if="token" @click.prevent="logout"
             >Logout</router-link
           >
-          <button type="button" class="header__burger" @click="toggleMenu">
+          <button
+            type="button"
+            class="header__burger"
+            @click="toggleMenu"
+            :class="{ active: menuActive }"
+          >
             <span class="header__burger-line"></span>
             <span class="header__burger-line"></span>
             <span class="header__burger-line"></span>
@@ -153,6 +155,8 @@ body.lock {
 
 .header__burger {
   display: none;
+  width: 30px;
+  height: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: space-between;
