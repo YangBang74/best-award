@@ -38,7 +38,7 @@ const logout = () => {
         <a class="header__logo" href="/">Best.Award</a>
         <nav class="header__menu" :class="{ active: menuActive }">
           <a href="/">Home</a>
-          <a href="/Awards">Awards</a>
+          <a href="/awards">Awards</a>
           <a href="/about">About</a>
         </nav>
         <div class="header__action">
