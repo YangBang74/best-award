@@ -195,7 +195,7 @@ body.lock {
     justify-content: start;
     padding: 70px 0;
     gap: 40px;
-    top: 0;
+    top: 60px;
     right: -1000%;
     width: 100%;
     height: 100vh;
