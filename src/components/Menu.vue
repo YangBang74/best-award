@@ -200,6 +200,7 @@ body.lock {
     width: 100%;
     height: 100vh;
     transition: 0.2s;
+    z-index: 10000;
     a {
       font-size: 20px;
     }
