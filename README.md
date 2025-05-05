@@ -1,35 +1,102 @@
-# award
+# Best Award 🎵🏆
 
-This template should help get you started developing with Vue 3 in Vite.
+A modern Vue 3 web application for managing and voting on top singles, albums, and artists. Built with Composition API, modular services, and scalable architecture.
 
-## Recommended IDE Setup
+---
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 🚀 Features
 
-## Customize configuration
+✅ User authentication with Firebase (email/password)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+✅ Voting system with real-time updates (using Firebase Realtime Database)
 
-## Project Setup
+✅ Modular, reusable services for API calls and business logic
 
-```sh
+✅ Clean, responsive UI using CSS modules and scoped styles
+
+✅ Optimized lazy-loading of assets and images
+
+✅ Loader animations for enhanced UX
+
+✅ Clear component separation (UI, icons, services, utils)
+
+✅ Error handling and user feedback mechanisms
+
+✅ Easy-to-extend architecture for future award categories
+
+---
+
+## 🛠 Tech Stack
+
+* **Vue 3** + Composition API
+* **Pinia** for state management
+* **Firebase** (Authentication + Realtime Database)
+* **Axios** for API calls
+* **Vite** for blazing-fast dev server
+* **ESLint** + **Prettier** for code quality
+
+---
+
+## 📦 Project Structure
+
+```
+/src
+  /api           → Axios instances
+  /components    → Vue components (UI, Icons, Pages)
+  /services      → Business logic (e.g., voteService.js)
+  /stores        → Pinia stores (auth, user data)
+  /views         → Top-level page components
+```
+
+---
+
+## 🔧 Setup & Installation
+
+1️⃣ **Clone the repository:**
+
+```bash
+git clone https://github.com/YangBang74/best-award.git
+```
+
+2️⃣ **Install dependencies:**
+
+```bash
+cd best-award
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+3️⃣ **Configure Firebase:**
 
-```sh
+* Add your Firebase project settings to `.env` or directly in the `src/api` setup.
+
+4️⃣ **Run locally:**
+
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
+5️⃣ **Build for production:**
 
-```sh
+```bash
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+---
 
-```sh
-npm run lint
-```
+## 🌍 Live Demo
+
+🚧 Coming soon!
+
+---
+
+## 🤝 Contributing
+
+If you want to contribute:
+
+1. Fork this repo
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
