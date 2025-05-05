@@ -12,7 +12,7 @@ const authStore = useAuthStore()
 const singles = ref([])
 const loader = reactive({})
 const dateLoad = ref(true)
-const disabled = ref(false)
+const disabled = reactive({})
 
 Promise.all([getDates('singles').then((data) => (singles.value = data))]).then(() => {
   dateLoad.value = false
@@ -34,7 +34,7 @@ const voteForSinger = async (single) => {
         song.voters = {}
       }
       if (song.voters[userId]) {
-        disabled.value = !disabled.value
+        disabled[song.id] = true
         return
       }
       await axiosApiInstance.patch(
@@ -46,6 +46,7 @@ const voteForSinger = async (single) => {
       )
       song.vote += 1
       song.voters[userId] = true
+      disabled[song.id] = true
     }
   } catch (err) {
     console.error('Error voting for song:', err)
@@ -81,7 +82,7 @@ const voteForSinger = async (single) => {
                 type="button"
                 class="singles__about-button"
                 @click="voteForSinger(sing)"
-                :disabled="(loader[sing.id], !disabled)"
+                :disabled="(loader[sing.id], disabled[sing.id])"
               >
                 <ButtonLoader v-if="loader[sing.id]" />
                 <p v-else>Vote</p>

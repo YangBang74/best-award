@@ -207,6 +207,7 @@ const signup = async () => {
   background-color: #ffffff;
   font-weight: 600;
   text-transform: uppercase;
+  color: #000;
 }
 
 .regstation__sigin {

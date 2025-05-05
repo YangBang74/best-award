@@ -12,7 +12,7 @@ const authStore = useAuthStore()
 const albums = ref([])
 const loader = reactive({})
 const dateLoad = ref(true)
-const disabled = ref(false)
+const disabled = reactive({})
 const notAuth = ref(false)
 
 Promise.all([getDates('album').then((data) => (albums.value = data))]).then(() => {
@@ -33,7 +33,7 @@ const voteForAlbum = async (album) => {
       album.voters = {}
     }
     if (album.voters[userId]) {
-      disabled.value = !disabled.value
+      disabled[album.id] = true
       return
     }
 
@@ -47,6 +47,7 @@ const voteForAlbum = async (album) => {
 
     album.vote += 1
     album.voters[userId] = true
+    disabled[album.id] = true
   } catch (err) {
     console.error('Error voting for album:', err)
   } finally {
@@ -81,7 +82,7 @@ const voteForAlbum = async (album) => {
                 type="button"
                 class="albums__about-button"
                 @click="voteForAlbum(sing)"
-                :disabled="(loader[sing.id], !disabled)"
+                :disabled="(loader[sing.id], disabled[sing.id])"
               >
                 <ButtonLoader v-if="loader[sing.id]" />
                 <p v-else>Vote</p>
