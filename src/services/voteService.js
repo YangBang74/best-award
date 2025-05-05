@@ -25,7 +25,7 @@ export const vote = async (date, name, disabled, dates) => {
         {
           vote: song.vote + 1,
           voters: { ...song.voters, [userId]: true },
-        },
+        }
       )
       song.vote += 1
       song.voters[userId] = true

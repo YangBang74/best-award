@@ -3,8 +3,8 @@ import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
 import ButtonLoader from '@/components/icons/ButtonLoader.vue'
 import BackButton from '@/components/UI/BackButton.vue'
 import { ref, reactive } from 'vue'
-import { getDates } from '@/utils/getDates'
-import { vote } from '@/utils/vote'
+import { getDates } from '@/services/getDates'
+import { vote } from '@/services/voteService'
 
 const singlesDate = ref([])
 const loader = reactive({})

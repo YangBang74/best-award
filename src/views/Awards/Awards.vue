@@ -1,7 +1,7 @@
 <script setup>
 import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
 import BackButton from '@/components/UI/BackButton.vue'
-import { getDates } from '@/utils/getDates'
+import { getDates } from '@/services/getDates'
 import { ref, nextTick } from 'vue'
 import Glide from '@glidejs/glide'
 
