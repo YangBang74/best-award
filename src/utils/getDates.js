@@ -17,6 +17,6 @@ export const getDates = async (dbName) => {
     return result
   } catch (err) {
     console.error(`Error fetching ${dbName}:`, err)
-    return [] // возвращаем пустой массив в случае ошибки
+    return []
   }
 }

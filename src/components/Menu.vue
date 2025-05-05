@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
+import { useAuthStore } from '@/stores/auth'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -39,11 +39,10 @@ const logout = () => {
         <nav class="header__menu" :class="{ active: menuActive }">
           <a href="/">Home</a>
           <a href="/Awards">Awards</a>
-          <a href="/The-Best">The Best</a>
           <a href="/about">About</a>
         </nav>
         <div class="header__action">
-          <router-link to="/profile" v-if="token" type="button" class="header__profil">
+          <!-- <router-link to="/profile" v-if="token" type="button" class="header__profil">
             <svg
               width="30px"
               height="30px"
@@ -65,7 +64,7 @@ const logout = () => {
                 stroke-linecap="round"
               />
             </svg>
-          </router-link>
+          </router-link> -->
           <router-link to="/signin" v-if="!token">Sign In</router-link>
           <router-link class="menu__link" to="/signin" v-if="token" @click.prevent="logout"
             >Logout</router-link
@@ -106,7 +105,7 @@ body.lock {
   align-items: center;
   column-gap: 20px;
   div {
-    padding: 10px 0;
+    padding: 15px 0;
   }
 }
 
@@ -119,7 +118,7 @@ body.lock {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 35%;
+  width: 25%;
   a {
     color: #000000;
     font-weight: 600;

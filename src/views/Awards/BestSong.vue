@@ -3,53 +3,22 @@ import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
 import ButtonLoader from '@/components/icons/ButtonLoader.vue'
 import BackButton from '@/components/UI/BackButton.vue'
 import { ref, reactive } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import axiosApiInstance from '@/api'
 import { getDates } from '@/utils/getDates'
+import { vote } from '@/utils/vote'
 
-const authStore = useAuthStore()
-
-const singles = ref([])
+const singlesDate = ref([])
 const loader = reactive({})
 const dateLoad = ref(true)
 const disabled = reactive({})
 
-Promise.all([getDates('singles').then((data) => (singles.value = data))]).then(() => {
+Promise.all([getDates('singles').then((data) => (singlesDate.value = data))]).then(() => {
   dateLoad.value = false
 })
 
-const voteForSinger = async (single) => {
+const handleVote = async (single) => {
   loader[single.id] = true
   try {
-    const token = authStore.userInfo.token
-    const userId = authStore.userInfo.userId
-    if (!token || !userId) {
-      console.log('User not authenticated')
-      return
-    }
-    const song = singles.value.find((sing) => sing.id === single.id)
-
-    if (song) {
-      if (!song.voters) {
-        song.voters = {}
-      }
-      if (song.voters[userId]) {
-        disabled[song.id] = true
-        return
-      }
-      await axiosApiInstance.patch(
-        `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/singles/${single.id}.json`,
-        {
-          vote: song.vote + 1,
-          voters: { ...song.voters, [userId]: true },
-        },
-      )
-      song.vote += 1
-      song.voters[userId] = true
-      disabled[song.id] = true
-    }
-  } catch (err) {
-    console.error('Error voting for song:', err)
+    await vote(single, 'singles', disabled, singlesDate)
   } finally {
     loader[single.id] = false
   }
@@ -60,7 +29,7 @@ const voteForSinger = async (single) => {
   <div class="loader" v-if="dateLoad">
     <div class="loader-item"></div>
   </div>
-  <section class="singles" v-if="singles.length">
+  <section class="singles" v-if="singlesDate.length">
     <div class="container">
       <div class="singles__wrap">
         <h1 class="singles-title">
@@ -68,7 +37,7 @@ const voteForSinger = async (single) => {
           <AwardTitleIcon />
         </h1>
         <div class="singles__row">
-          <div class="singles__block" v-for="sing in singles" :key="sing.id">
+          <div class="singles__block" v-for="sing in singlesDate" :key="sing.id">
             <div class="singles__block-img">
               <img :src="sing.src" :alt="sing.name" loading="lazy" />
             </div>
@@ -81,7 +50,7 @@ const voteForSinger = async (single) => {
               <button
                 type="button"
                 class="singles__about-button"
-                @click="voteForSinger(sing)"
+                @click="handleVote(sing)"
                 :disabled="(loader[sing.id], disabled[sing.id])"
               >
                 <ButtonLoader v-if="loader[sing.id]" />

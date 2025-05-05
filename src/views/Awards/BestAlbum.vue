@@ -3,53 +3,22 @@ import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
 import ButtonLoader from '@/components/icons/ButtonLoader.vue'
 import BackButton from '@/components/UI/BackButton.vue'
 import { ref, reactive } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import axiosApiInstance from '@/api'
 import { getDates } from '@/utils/getDates'
+import { vote } from '@/utils/vote'
 
-const authStore = useAuthStore()
-
-const albums = ref([])
+const albumsDates = ref([])
 const loader = reactive({})
 const dateLoad = ref(true)
 const disabled = reactive({})
-const notAuth = ref(false)
 
-Promise.all([getDates('album').then((data) => (albums.value = data))]).then(() => {
+Promise.all([getDates('album').then((data) => (albumsDates.value = data))]).then(() => {
   dateLoad.value = false
 })
 
-const voteForAlbum = async (album) => {
+const handleVote = async (album) => {
   loader[album.id] = true
   try {
-    const token = authStore.userInfo.token
-    const userId = authStore.userInfo.userId
-    if (!token || !userId) {
-      notAuth.value = !notAuth.value
-      return
-    }
-
-    if (!album.voters) {
-      album.voters = {}
-    }
-    if (album.voters[userId]) {
-      disabled[album.id] = true
-      return
-    }
-
-    await axiosApiInstance.patch(
-      `https://award-vue-default-rtdb.asia-southeast1.firebasedatabase.app/album/${album.id}.json`,
-      {
-        vote: album.vote + 1,
-        voters: { ...album.voters, [userId]: true },
-      },
-    )
-
-    album.vote += 1
-    album.voters[userId] = true
-    disabled[album.id] = true
-  } catch (err) {
-    console.error('Error voting for album:', err)
+    await vote(album, 'album', disabled, albumsDates)
   } finally {
     loader[album.id] = false
   }
@@ -60,7 +29,7 @@ const voteForAlbum = async (album) => {
   <div class="loader" v-if="dateLoad">
     <div class="loader-item"></div>
   </div>
-  <section class="albums" v-if="albums.length">
+  <section class="albums" v-if="albumsDates.length">
     <div class="container">
       <div class="albums__wrap">
         <h1 class="albums-title">
@@ -68,7 +37,7 @@ const voteForAlbum = async (album) => {
           <AwardTitleIcon />
         </h1>
         <div class="albums__row">
-          <div class="albums__block" v-for="sing in albums" :key="sing.id">
+          <div class="albums__block" v-for="sing in albumsDates" :key="sing.id">
             <div class="albums__block-img">
               <img :src="sing.src" :alt="sing.name" loading="lazy" />
             </div>
@@ -81,7 +50,7 @@ const voteForAlbum = async (album) => {
               <button
                 type="button"
                 class="albums__about-button"
-                @click="voteForAlbum(sing)"
+                @click="handleVote(sing)"
                 :disabled="(loader[sing.id], disabled[sing.id])"
               >
                 <ButtonLoader v-if="loader[sing.id]" />

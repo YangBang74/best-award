@@ -280,7 +280,7 @@ const formatter = new Intl.NumberFormat('en', {
   width: 100%;
   height: 500px;
   display: flex;
-  background: url('/hero/hero-bg.svg') no-repeat center center / cover;
+  background: url('/hero/hero-bg.svg') no-repeat -100px 0 / cover;
 }
 
 .hero__wrap {
@@ -503,6 +503,12 @@ const formatter = new Intl.NumberFormat('en', {
   }
   .recomend__body {
     gap: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .top__item {
+    max-width: 280px;
   }
 }
 </style>
