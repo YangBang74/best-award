@@ -36,8 +36,8 @@ const signin = async () => {
 </script>
 
 <template>
-  <div class="regstation">
-    <div class="container">
+  <div class="wrap">
+    <div class="regstation">
       <h1 class="regstation__title">Welcome back!</h1>
       <p class="resgstation__text">Enter your Credentials to acces your account</p>
       <div class="error">
@@ -134,6 +134,12 @@ const signin = async () => {
   </div>
 </template>
 <style scoped>
+.wrap {
+  height: 100vh;
+  align-content: center;
+  justify-items: center;
+}
+
 .error {
   margin: 15px 0 20px;
   height: 16px;
@@ -156,6 +162,7 @@ const signin = async () => {
   background-color: #2c2c2c;
   padding: 50px;
   border-radius: 20px;
+  margin: 0 20px;
 }
 
 .regstation__title {
@@ -221,5 +228,11 @@ const signin = async () => {
 
 .regstation__sigin a {
   color: #0066ff;
+}
+
+@media (max-width: 768px) {
+  .regstation {
+    padding: 20px 40px;
+  }
 }
 </style>

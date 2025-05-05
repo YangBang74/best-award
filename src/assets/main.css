@@ -29,6 +29,18 @@ button:disabled {
   background-color: var(--button-disabled);
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* минимум высота на весь экран */
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0 20px;
@@ -36,7 +48,8 @@ button:disabled {
 }
 
 a,
-button {
+button,
+svg {
   transition: 0.2s;
 }
 

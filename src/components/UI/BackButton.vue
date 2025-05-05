@@ -112,6 +112,7 @@ const goBack = () => {
   position: fixed;
   top: 70px;
   left: 20px;
+  background-color: #ffffff99;
   color: #000000;
   border-radius: 50%;
   width: 45px;
