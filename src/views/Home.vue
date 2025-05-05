@@ -11,7 +11,7 @@ const apiKey = import.meta.env.VITE_LASTFM_API_KEY
 const getTopTracks = async () => {
   try {
     const response = await axios.get(
-      `https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${apiKey}&format=json`,
+      `https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${apiKey}&format=json`
     )
     topTracks.value = response.data.tracks.track
   } catch (error) {
@@ -22,10 +22,9 @@ const getTopTracks = async () => {
 const getTopArtists = async () => {
   try {
     const response = await axios.get(
-      `https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${apiKey}&format=json`,
+      `https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${apiKey}&format=json`
     )
     topArtists.value = response.data.artists.artist
-    console.log(topArtists.value)
   } catch (error) {
     console.error('Error fetching top tracks:', error)
   }
