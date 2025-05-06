@@ -1,7 +1,3 @@
-<script setup>
-import ThemeButton from './UI/ThemeButton.vue'
-</script>
-
 <template>
   <footer class="footer">
     <div class="container">
@@ -9,7 +5,6 @@ import ThemeButton from './UI/ThemeButton.vue'
         <div class="footer__text">©2025 Yan Khanov.</div>
 
         <nav class="footer__links">
-          <ThemeButton />
           <a href="https://github.com/YangBang74" target="_blank">
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -44,11 +44,13 @@ const formatter = new Intl.NumberFormat('en', {
     <div class="container">
       <div class="hero__wrap">
         <div class="hero__content">
-          <h1 class="hero__content-title">choose the best</h1>
+          <h1 class="hero__content-title">{{ $t('home.hero-title') }}</h1>
           <div class="hero__content-text">
-            <p>Vote for the best, reward for the best</p>
+            <p>{{ $t('home.hero-text') }}</p>
           </div>
-          <router-link to="/awards" class="hero__content-button"> Vote Now </router-link>
+          <router-link to="/awards" class="hero__content-button">
+            {{ $t('home.hero-button') }}
+          </router-link>
         </div>
       </div>
     </div>
@@ -60,13 +62,10 @@ const formatter = new Intl.NumberFormat('en', {
           <img src="/about.png" alt="music discket" />
         </div>
         <div class="about__text">
-          <h1 class="section-title">About Us</h1>
+          <h1 class="section-title">{{ $t('home.about-title') }}</h1>
           <div class="about__body-text">
             <p>
-              We’re a music community where your vote picks the best songs and albums. Vote daily,
-              watch rankings update live, and help shape a chart made by real listeners — not just
-              sales or streams. Discover new artists, support your favorites, and be part of a
-              movement that celebrates true musical talent.
+              {{ $t('home.about-text') }}
             </p>
           </div>
         </div>
@@ -75,18 +74,18 @@ const formatter = new Intl.NumberFormat('en', {
   </section>
   <div class="awards">
     <div class="container">
-      <h1 class="section-title">Awards</h1>
+      <h1 class="section-title">{{ $t('home.award-title') }}</h1>
       <div class="awards__body">
         <a href="/awards/best-song" class="awards__body-block">
-          <p>BEST SONG ON YEAR</p>
+          <p>{{ $t('home.awards-song') }}</p>
           <award-title-icon />
         </a>
         <a href="/awards/best-album" class="awards__body-block">
-          <p>BEST MUSIC ALBUM ON YEAR</p>
+          <p>{{ $t('home.awards-album') }}</p>
           <award-title-icon />
         </a>
         <a href="/awards/best-singer" class="awards__body-block">
-          <p>BEST SINGER ON YEAR</p>
+          <p>{{ $t('home.awards-singer') }}</p>
           <award-title-icon />
         </a>
       </div>
@@ -94,10 +93,10 @@ const formatter = new Intl.NumberFormat('en', {
   </div>
   <section class="chart">
     <div class="container">
-      <h1 class="section-title">Top on World</h1>
+      <h1 class="section-title">{{ $t('home.top-title') }}</h1>
       <div class="chart__body">
         <div class="top__list">
-          <div class="top__list-title">Top Tracks</div>
+          <div class="top__list-title">{{ $t('home.top-tracks') }}</div>
           <a
             v-for="(track, index) in topTracks.slice(0, 10)"
             :key="track.name"
@@ -110,12 +109,12 @@ const formatter = new Intl.NumberFormat('en', {
             </div>
             <div class="top__item-decrip">
               <p>{{ track.artist.name }} — {{ track.name }}</p>
-              <p>Listen: {{ formatter.format(track.playcount) }}</p>
+              <p>{{ $t('home.top-listen') }} {{ formatter.format(track.playcount) }}</p>
             </div>
           </a>
         </div>
         <div class="top__list">
-          <div class="top__list-title">Top Artists</div>
+          <div class="top__list-title">{{ $t('home.top-artists') }}</div>
           <a
             v-for="(artist, index) in topArtists.slice(0, 10)"
             :key="artist.name"
@@ -127,8 +126,11 @@ const formatter = new Intl.NumberFormat('en', {
               <span>{{ index + 1 }}. </span>
             </div>
             <div class="top__item-decrip">
-              <p>{{ artist.name }} — Folowers: {{ formatter.format(artist.listeners) }}</p>
-              <p>Listen: {{ formatter.format(artist.playcount) }}</p>
+              <p>
+                {{ artist.name }} — {{ $t('home.top-favorit') }}
+                {{ formatter.format(artist.listeners) }}
+              </p>
+              <p>{{ $t('home.top-listen') }} {{ formatter.format(artist.playcount) }}</p>
             </div>
           </a>
         </div>
@@ -137,7 +139,7 @@ const formatter = new Intl.NumberFormat('en', {
   </section>
   <section class="recomend">
     <div class="container">
-      <h1 class="section-title">We recommend</h1>
+      <h1 class="section-title">{{ $t('home.recomend') }}</h1>
       <div class="recomend__body">
         <a href="https://music.yandex.ru/" target="_blank" class="recoment__body-block">
           <svg
@@ -441,7 +443,9 @@ const formatter = new Intl.NumberFormat('en', {
 }
 
 .top__item {
+  align-items: center;
   padding: 10px;
+  height: 80px;
   max-width: 350px;
   background-color: #e9e9e9;
   border-radius: 10px;

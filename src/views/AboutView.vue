@@ -11,49 +11,33 @@ import GuitarIcon from '@/components/UI/GuitarIcon.vue'
             <img src="/about-bg.png" alt="" class="about__img-img" />
           </div>
           <div class="about__block">
-            <h1 class="about__block-title">About the Project</h1>
+            <h1 class="about__block-title">{{ $t('about.title') }}</h1>
             <div class="about__block-text">
               <p>
-                This site was created for everyone who loves music and wants to help decide which
-                songs and albums truly deserve the spotlight.
+                {{ $t('about.text-1') }}
               </p>
-              <p>
-                We believe that listeners’ voices matter more than any chart or award committee.
-                Here, every vote shapes the final rankings.
-              </p>
+              <p>{{ $t('about.text-2') }}.</p>
             </div>
             <ul class="about__block-list">
               <li class="about__block-item">
-                <h3 class="about__list-title">What We Do:</h3>
-                <p class="about__list-text">
-                  <GuitarIcon color="#1100ff" />
-                  <span>
-                    We collect the best music releases, let users vote, and create monthly and
-                    yearly top lists.
-                  </span>
-                </p>
-              </li>
-              <li class="about__block-item">
-                <h3 class="about__list-title">How It Works:</h3>
+                <h3 class="about__list-title">{{ $t('about.how-title') }}</h3>
                 <p class="about__list-text">
                   <GuitarIcon color="#ffabb9" />
                   <span>
-                    Every registered user can vote daily for their favorite songs and albums. The
-                    results update in real time, so you always see the latest rankings.
+                    {{ $t('about.how-text') }}
                   </span>
                 </p>
               </li>
               <li class="about__block-item">
-                <h3 class="about__list-title">What We Do:</h3>
+                <h3 class="about__list-title">{{ $t('about.what-title') }}</h3>
                 <p class="about__list-text">
                   <GuitarIcon color="#000" />
                   <span>
-                    We collect the best music releases, let users vote, and create monthly and
-                    yearly top lists.
+                    {{ $t('about.what-text') }}
                   </span>
                 </p>
                 <p class="last-text">
-                  Join us, cast your vote, and help create an honest and dynamic music ranking!
+                  {{ $t('about.join') }}
                 </p>
               </li>
             </ul>

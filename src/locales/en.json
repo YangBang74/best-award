@@ -1,0 +1,56 @@
+{
+  "header": {
+    "logo": "Best.Award",
+    "nav": {
+      "home": "Home",
+      "awards": "Awards",
+      "about": "About"
+    },
+    "actions": {
+      "signIn": "Sign In",
+      "regist": "Sign Up",
+      "logOut": "Logout"
+    },
+    "russian": "Russian",
+    "english": "English"
+  },
+  "footer": {
+    "copy": "©2025 Yan Khanov.",
+    "github": "GitHub",
+    "telegram": "Telegram"
+  },
+  "home": {
+    "hero-title": "choose the best",
+    "hero-text": "Vote for the best, reward for the best",
+    "hero-button": "Vote Now",
+    "about-title": "About-us",
+    "about-text": "We’re a music community where your vote picks the best songs and albums. Vote daily, watch rankings update live, and help shape a chart made by real listeners — not just sales or streams. Discover new artists, support your favorites, and be part of a movement that celebrates true musical talent.",
+    "award-title": "Awards",
+    "awards-song": "BEST SONG ON YEAR",
+    "awards-album": "BEST MUSIC ALBUM ON YEAR",
+    "awards-singer": "BEST SINGER ON YEAR",
+    "top-title": "Top on World",
+    "top-tracks": "Top tracks",
+    "top-artists": "Top artists",
+    "top-favorit": "Followers:",
+    "top-listen": "Listen:",
+    "recomend": "We recommend"
+  },
+  "about": {
+    "title": "About the Project",
+    "text-1": "This site was created for everyone who loves music and wants to help decide which songs and albums truly deserve the spotlight.",
+    "text-2": "We believe that listeners’ voices matter more than any chart or award committee. Here, every vote shapes the final rankings.",
+    "how-title": "How It Works:",
+    "how-text": "Every registered user can vote daily for their favorite songs and albums. The results update in real time, so you always see the latest rankings.",
+    "what-title": "What We Do:",
+    "what-text": "We collect the best music releases, let users vote, and create monthly and yearly top lists.",
+    "join": "Join us, cast your vote, and help create an honest and dynamic music ranking!"
+  },
+  "awards": {
+    "singer": "Best Singers",
+    "single": "Best Singles",
+    "album": "Best Albums",
+    "vote": "Vote",
+    "votes": "Votes:"
+  }
+}

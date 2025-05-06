@@ -6,11 +6,20 @@ import PageLoader from '@/components/UI/PageLoader.vue'
 import { ref, reactive } from 'vue'
 import { getDates } from '@/services/getDates'
 import { vote } from '@/services/voteService'
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n()
 
 const singersData = ref([])
 const loader = reactive({})
 const dateLoad = ref(true)
 const disabled = reactive({})
+const language = ref()
+
+if (locale.value == 'en') {
+  language.value = true
+  console.log(locale.value)
+} else language.value = false
 
 Promise.all([getDates('singers').then((data) => (singersData.value = data))]).then(() => {
   dateLoad.value = false
@@ -32,7 +41,7 @@ const handleVote = async (singers) => {
     <div class="container">
       <div class="singers__wrap">
         <h1 class="singers-title">
-          Best Singers <br />
+          {{ $t('awards.singer') }} <br />
           <AwardTitleIcon />
         </h1>
         <div class="singers__block" v-for="sing in singersData" :key="sing.id">
@@ -42,8 +51,9 @@ const handleVote = async (singers) => {
           <div class="singers__about">
             <div class="singers__about-text">
               <h2>{{ sing.name }}</h2>
-              <p>{{ sing.about }}</p>
-              <b>Votes: {{ sing.vote }}</b>
+              <p v-if="language">{{ sing.aboutEn }}</p>
+              <p v-else>{{ sing.about }}</p>
+              <b>{{ $t('awards.votes') }} {{ sing.vote }}</b>
             </div>
             <button
               type="button"
@@ -52,7 +62,7 @@ const handleVote = async (singers) => {
               :disabled="(loader[sing.id], disabled[sing.id])"
             >
               <ButtonLoader v-if="loader[sing.id]" />
-              <p v-else>Vote</p>
+              <p v-else>{{ $t('awards.vote') }}</p>
             </button>
           </div>
         </div>

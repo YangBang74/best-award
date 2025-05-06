@@ -32,7 +32,7 @@ const handleVote = async (album) => {
     <div class="container">
       <div class="albums__wrap">
         <h1 class="albums-title">
-          Best albums <br />
+          {{ $t('awards.album') }} <br />
           <AwardTitleIcon />
         </h1>
         <div class="albums__row">
@@ -44,7 +44,7 @@ const handleVote = async (album) => {
               <div class="albums__about-text">
                 <span>{{ sing.name }} </span><br />
                 <span>{{ sing.author }} </span><br />
-                <span>Votes: {{ sing.vote }}</span>
+                <span>{{ $t('awards.votes') }} {{ sing.vote }}</span>
               </div>
               <button
                 type="button"
@@ -53,7 +53,7 @@ const handleVote = async (album) => {
                 :disabled="(loader[sing.id], disabled[sing.id])"
               >
                 <ButtonLoader v-if="loader[sing.id]" />
-                <p v-else>Vote</p>
+                <p v-else>{{ $t('awards.vote') }}</p>
               </button>
             </div>
           </div>

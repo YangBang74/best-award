@@ -51,7 +51,7 @@ Promise.all([
     <section class="singers" v-if="singers.length">
       <div class="container">
         <h1 class="songs-title">
-          Best Singers <br />
+          {{ $t('awards.singer') }} <br />
           <AwardTitleIcon />
         </h1>
         <div class="glide glide-singers">
@@ -80,7 +80,7 @@ Promise.all([
     <section class="singles" v-if="singles.length">
       <div class="container">
         <h1 class="songs-title">
-          Best Singles <br />
+          {{ $t('awards.single') }} <br />
           <AwardTitleIcon />
         </h1>
         <div class="glide glide-singles">
@@ -109,7 +109,7 @@ Promise.all([
     <section class="albums" v-if="albums.length">
       <div class="container">
         <h1 class="songs-title">
-          Best Albums <br />
+          {{ $t('awards.album') }} <br />
           <AwardTitleIcon />
         </h1>
         <div class="glide glide-albums">

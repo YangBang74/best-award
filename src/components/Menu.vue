@@ -3,8 +3,7 @@ import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-
-
+import ThemeButton from './UI/ThemeButton.vue'
 
 const authStore = useAuthStore()
 const menuActive = ref(false)
@@ -39,11 +38,14 @@ const logout = () => {
       <div class="header__wrap">
         <a class="header__logo" href="/">Best.Award</a>
         <nav class="header__menu" :class="{ active: menuActive }">
-          <a href="/">Home</a>
-          <a href="/awards">Awards</a>
-          <a href="/about">About</a>
+          <a href="/">{{ $t('header.nav.home') }}</a>
+          <a href="/awards">{{ $t('header.nav.awards') }}</a>
+          <a href="/about">{{ $t('header.nav.about') }}</a>
         </nav>
         <div class="header__action">
+          <ThemeButton />
+          <button @click="$i18n.locale = 'en'">{{ $t('header.english') }}</button>
+          <button @click="$i18n.locale = 'ru'">{{ $t('header.russian') }}</button>
           <!-- <router-link to="/profile" v-if="token" type="button" class="header__profil">
             <svg
               width="30px"
@@ -67,10 +69,10 @@ const logout = () => {
               />
             </svg>
           </router-link> -->
-          <router-link to="/signin" v-if="!token">Sign In</router-link>
-          <router-link class="menu__link" to="/signin" v-if="token" @click.prevent="logout"
-            >Logout</router-link
-          >
+          <router-link to="/signin" v-if="!token">{{ $t('header.actions.signIn') }}</router-link>
+          <router-link class="menu__link" to="/signin" v-if="token" @click.prevent="logout">{{
+            $t('header.actions.logOut')
+          }}</router-link>
 
           <button
             type="button"
@@ -217,5 +219,4 @@ body.lock {
     display: flex;
   }
 }
-
 </style>
