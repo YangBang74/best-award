@@ -30,7 +30,6 @@ const signin = async () => {
     router.push('/')
   } catch (err) {
     console.error('Sign-in failed:', err)
-    // authStore.error уже содержит понятное сообщение от Firebase
   }
 }
 </script>

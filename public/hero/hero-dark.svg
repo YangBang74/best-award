@@ -1,0 +1,138 @@
+<svg version="1.1" id="Layer_1"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 5000 2916"
+     style="enable-background:new 0 0 5000 2916;"
+     xml:space="preserve">
+
+  <!-- Встроенные стили для переключения градиентов -->
+  <defs>
+    <style type="text/css"><![CDATA[
+      :root {
+        --grad-start-light: #646464;
+  	--grad-end-light: #b1b1b1;
+  	--grad-start-dark: #444444;
+  	--grad-end-dark: #222222;
+      }
+      /* По умолчанию (light) */
+      .stop-1 { stop-color: var(--grad-start-light); }
+      .stop-2 { stop-color: var(--grad-end-light); }
+      /* Для тёмной темы */
+      [data-theme="dark"] .stop-1 { stop-color: var(--grad-start-dark); }
+      [data-theme="dark"] .stop-2 { stop-color: var(--grad-end-dark); }
+    ]]></style>
+
+    <!-- Объявляем универсальные градиенты -->
+    <linearGradient id="gradA" gradientUnits="userSpaceOnUse" x1="531.7" y1="1941.7" x2="2231.7" y2="651.7">
+      <stop offset="0" class="stop-1"/>
+      <stop offset="1" class="stop-2"/>
+    </linearGradient>
+    <linearGradient id="gradB" gradientUnits="userSpaceOnUse" x1="4303.3" y1="712.9" x2="3163.3" y2="2702.9">
+      <stop offset="0" class="stop-1"/>
+      <stop offset="1" class="stop-2"/>
+    </linearGradient>
+    <linearGradient id="gradC" gradientUnits="userSpaceOnUse" x1="2794.8" y1="179.5" x2="2394.3" y2="878.6">
+      <stop offset="0" class="stop-1"/>
+      <stop offset="1" class="stop-2"/>
+    </linearGradient>
+    <linearGradient id="gradD" gradientUnits="userSpaceOnUse" x1="2080.6" y1="2536.9" x2="2737.6" y2="2038.3">
+      <stop offset="0" class="stop-1"/>
+      <stop offset="1" class="stop-2"/>
+    </linearGradient>
+    <linearGradient id="gradE" gradientUnits="userSpaceOnUse" x1="4135.3" y1="300.1" x2="3565.4" y2="1295.1">
+      <stop offset="0" class="stop-1"/>
+      <stop offset="1" class="stop-2"/>
+    </linearGradient>
+    <linearGradient id="gradF" gradientUnits="userSpaceOnUse" x1="1902.8" y1="1007.6" x2="1332.9" y2="2002.6">
+      <stop offset="0" class="stop-1"/>
+      <stop offset="1" class="stop-2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Прозрачный фон -->
+  <rect width="5000" height="2916" fill="none"/>
+
+  <!-- Левый большой круг -->
+  <g clip-path="url(#clip1)">
+    <defs>
+      <path id="circle1" d="M1242.432,427.367c538.479,0,974.999,436.523,974.999,975.001c0,538.477-436.521,975-974.999,975
+        s-974.999-436.523-974.999-975C267.432,863.891,703.953,427.367,1242.432,427.367"/>
+    </defs>
+    <clipPath id="clip1">
+      <use xlink:href="#circle1" overflow="visible"/>
+    </clipPath>
+    <rect x="267.432" y="427.367" width="1949.999" height="1950.002"
+          fill="url(#gradA)"/>
+  </g>
+
+  <!-- Правый большой круг -->
+  <g clip-path="url(#clip2)">
+    <defs>
+      <path id="circle2" d="M3862.433,507.368
+        c538.477,0,975.001,436.522,975.001,975c0,538.478-436.524,975-975.001,975s-975.001-436.522-975.001-975
+        C2887.432,943.889,3323.956,507.368,3862.433,507.368"/>
+    </defs>
+    <clipPath id="clip2">
+      <use xlink:href="#circle2" overflow="visible"/>
+    </clipPath>
+    <rect x="2887.432" y="507.368" width="1950.002" height="1950"
+          fill="url(#gradB)"/>
+  </g>
+
+  <!-- Малый верхний круг -->
+  <g clip-path="url(#clip3)">
+    <defs>
+      <path id="circle3" d="M2639.934,107.367
+        c189.157,0,342.503,153.343,342.503,342.502c0,189.158-153.346,342.502-342.503,342.502
+        c-189.157,0-342.5-153.344-342.5-342.502C2297.434,260.71,2450.777,107.367,2639.934,107.367"/>
+    </defs>
+    <clipPath id="clip3">
+      <use xlink:href="#circle3" overflow="visible"/>
+    </clipPath>
+    <rect x="2297.434" y="107.367" width="685.003" height="685.003"
+          fill="url(#gradC)"/>
+  </g>
+
+  <!-- Малый нижний круг -->
+  <g clip-path="url(#clip4)">
+    <defs>
+      <path id="circle4" d="M2355.294,1951.652
+        c208.114,0,376.821,168.709,376.821,376.823c0,208.112-168.707,376.823-376.821,376.823
+        c-208.114,0-376.821-168.71-376.821-376.823C1978.474,2120.361,2147.18,1951.652,2355.294,1951.652"/>
+    </defs>
+    <clipPath id="clip4">
+      <use xlink:href="#circle4" overflow="visible"/>
+    </clipPath>
+    <rect x="1978.474" y="1951.652" width="753.641" height="753.645"
+          fill="url(#gradD)"/>
+  </g>
+
+  <!-- Верхний правый средний круг -->
+  <g clip-path="url(#clip5)">
+    <defs>
+      <path id="circle5" d="M3914.935,197.367
+        c269.237,0,487.497,218.261,487.497,487.5s-218.261,487.5-487.497,487.5
+        c-269.24,0-487.5-218.261-487.5-487.5S3645.695,197.367,3914.935,197.367"/>
+    </defs>
+    <clipPath id="clip5">
+      <use xlink:href="#circle5" overflow="visible"/>
+    </clipPath>
+    <rect x="3427.434" y="197.367" width="974.998" height="975"
+          fill="url(#gradE)"/>
+  </g>
+
+  <!-- Левый средний круг -->
+  <g clip-path="url(#clip6)">
+    <defs>
+      <path id="circle6" d="M1682.433,904.868
+        c269.242,0,487.502,218.261,487.502,487.5s-218.26,487.5-487.502,487.5
+        c-269.239,0-487.499-218.261-487.499-487.5S1413.194,904.868,1682.433,904.868"/>
+    </defs>
+    <clipPath id="clip6">
+      <use xlink:href="#circle6" overflow="visible"/>
+    </clipPath>
+    <rect x="1194.934" y="904.868" width="975.001" height="975"
+          fill="url(#gradF)"/>
+  </g>
+
+</svg>

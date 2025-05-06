@@ -2,7 +2,6 @@ button {
   cursor: pointer;
 }
 
-/* Reset and base styles  */
 * {
   padding: 0px;
   margin: 0px;
@@ -15,8 +14,6 @@ button {
   box-sizing: border-box;
 }
 
-/* Links */
-
 a,
 a:link,
 a:visited {
@@ -27,8 +24,6 @@ a:visited {
 a:hover {
   text-decoration: none;
 }
-
-/* Common */
 
 aside,
 nav,
@@ -68,8 +63,6 @@ svg {
 address {
   font-style: normal;
 }
-
-/* Form */
 
 input,
 textarea,

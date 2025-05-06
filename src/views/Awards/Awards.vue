@@ -1,6 +1,7 @@
 <script setup>
 import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
 import BackButton from '@/components/UI/BackButton.vue'
+import PageLoader from '@/components/UI/PageLoader.vue'
 import { getDates } from '@/services/getDates'
 import { ref, nextTick } from 'vue'
 import Glide from '@glidejs/glide'
@@ -45,9 +46,7 @@ Promise.all([
 </script>
 
 <template>
-  <div class="loader" v-if="loader">
-    <div class="loader-item"></div>
-  </div>
+  <PageLoader v-if="loader" />
   <div class="awards">
     <section class="singers" v-if="singers.length">
       <div class="container">
@@ -208,8 +207,8 @@ section {
 
 .glide__arrows button {
   min-height: 418px;
-  height: 100%; /* remove the full-height stretching */
-  align-self: center; /* center vertically */
+  height: 100%;
+  align-self: center;
   background: rgba(0, 0, 0);
   color: #fff;
   border: none;
@@ -226,17 +225,17 @@ section {
 
 .glide__arrows {
   position: absolute;
-  top: 50%; /* center vertically relative to slides */
+  top: 50%;
   transform: translateY(-50%);
   width: 100%;
   display: flex;
   justify-content: space-between;
   z-index: 10;
-  pointer-events: none; /* allow buttons only to capture events */
+  pointer-events: none;
 }
 
 .glide__arrows button {
-  pointer-events: auto; /* make buttons clickable */
+  pointer-events: auto;
 }
 .glide__arrows button:hover {
   opacity: 0.8;
@@ -246,59 +245,5 @@ section {
   width: 350px;
   height: 350px;
   object-fit: cover;
-}
-
-.loader {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader-item {
-  width: 50px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 8px solid #04346b;
-  animation:
-    l20-1 0.8s infinite linear alternate,
-    l20-2 1.6s infinite linear;
-}
-@keyframes l20-1 {
-  0% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-  }
-  12.5% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-  }
-  25% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-  }
-  50% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-  }
-  62.5% {
-    clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-  }
-  75% {
-    clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-  }
-  100% {
-    clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-  }
-}
-@keyframes l20-2 {
-  0% {
-    transform: scaleY(1) rotate(0deg);
-  }
-  49.99% {
-    transform: scaleY(1) rotate(135deg);
-  }
-  50% {
-    transform: scaleY(-1) rotate(0deg);
-  }
-  100% {
-    transform: scaleY(-1) rotate(-135deg);
-  }
 }
 </style>

@@ -88,7 +88,7 @@ import GuitarIcon from '@/components/UI/GuitarIcon.vue'
   width: 100%;
   text-align: center;
   img {
-    max-width: 500px;
+    max-width: 400px;
     width: 100%;
   }
 }

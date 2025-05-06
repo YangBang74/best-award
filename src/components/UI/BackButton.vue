@@ -112,8 +112,8 @@ const goBack = () => {
   position: fixed;
   top: 70px;
   left: 20px;
-  background-color: #ffffff99;
-  color: #000000;
+  color: var(--text-color);
+  background-color: var(--background-color);
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -135,7 +135,6 @@ const goBack = () => {
   }
 }
 
-/* Анимация */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition:

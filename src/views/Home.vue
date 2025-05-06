@@ -279,7 +279,7 @@ const formatter = new Intl.NumberFormat('en', {
   width: 100%;
   height: 500px;
   display: flex;
-  background: url('/hero/hero-bg.svg') no-repeat -100px 0 / cover;
+  background: var(--hero-bg) no-repeat -100px 0 / cover;
 }
 
 .hero__wrap {
@@ -292,6 +292,7 @@ const formatter = new Intl.NumberFormat('en', {
   padding: 150px 0;
   display: flex;
   flex-direction: column;
+  color: var(--hero-color);
 }
 
 .hero__content-title {
@@ -311,7 +312,7 @@ const formatter = new Intl.NumberFormat('en', {
 }
 
 .hero__content-button {
-  background: #000;
+  background: var(--button-hero-bg);
   margin-top: 20px;
   border-radius: 5px;
   width: 150px;
@@ -382,11 +383,11 @@ const formatter = new Intl.NumberFormat('en', {
 }
 
 .awards__body-block {
+  color: var(--text-color);
   font-weight: 600;
   padding: 18px 0 0;
   border-radius: 30px 0 30px 0;
-  border: 2px solid #000;
-  /* background: url('/award.png') no-repeat center 18px / contain; */
+  border: 2px solid var(--text-color);
   height: 100px;
   min-width: 300px;
   text-align: center;
@@ -397,8 +398,8 @@ const formatter = new Intl.NumberFormat('en', {
 }
 
 .awards__body-block:hover {
-  background: #000000;
-  color: #fff;
+  background: var(--award-card-bg);
+  color: var(--award-card-text);
 }
 
 .recomend {

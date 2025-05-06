@@ -2,6 +2,7 @@
 import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
 import ButtonLoader from '@/components/icons/ButtonLoader.vue'
 import BackButton from '@/components/UI/BackButton.vue'
+import PageLoader from '@/components/UI/PageLoader.vue'
 import { ref, reactive } from 'vue'
 import { getDates } from '@/services/getDates'
 import { vote } from '@/services/voteService'
@@ -26,9 +27,7 @@ const handleVote = async (singers) => {
 </script>
 
 <template>
-  <div class="loader" v-if="dateLoad">
-    <div class="loader-item"></div>
-  </div>
+  <PageLoader v-if="dateLoad" />
   <section class="singers" v-if="singersData.length">
     <div class="container">
       <div class="singers__wrap">
@@ -70,11 +69,13 @@ button:disabled {
 .singers {
   position: relative;
   margin: 30px 0 100px;
+  color: #000;
 }
 
 .singers-title {
   font-size: 2.2rem;
   font-weight: 600;
+  color: var(--text-color);
   font-family: var(--second-font);
   text-align: center;
 }
@@ -82,7 +83,7 @@ button:disabled {
 .singers__block {
   padding: 20px;
   border-radius: 20px;
-  background-color: #eeeeee;
+  background-color: var(--vote-card-bg);
   display: flex;
   gap: 20px;
   margin: 30px 0;
@@ -125,79 +126,7 @@ button:disabled {
   color: #fff;
 }
 
-.singers__back {
-  position: absolute;
-  top: -10px;
-  left: 20px;
-}
-
-.singers__back svg {
-  width: 40px;
-  height: 40px;
-}
-
-.loader {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader-item {
-  width: 50px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 8px solid #04346b;
-  animation:
-    l20-1 0.8s infinite linear alternate,
-    l20-2 1.6s infinite linear;
-}
-
-@keyframes l20-1 {
-  0% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-  }
-  12.5% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-  }
-  25% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-  }
-  50% {
-    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-  }
-  62.5% {
-    clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-  }
-  75% {
-    clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-  }
-  100% {
-    clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-  }
-}
-@keyframes l20-2 {
-  0% {
-    transform: scaleY(1) rotate(0deg);
-  }
-  49.99% {
-    transform: scaleY(1) rotate(135deg);
-  }
-  50% {
-    transform: scaleY(-1) rotate(0deg);
-  }
-  100% {
-    transform: scaleY(-1) rotate(-135deg);
-  }
-}
-
-@media (max-width: 768px) {
-  .singers__wrap {
-    justify-items: center;
-  }
-  .singers__block {
-    flex-direction: column;
-    max-width: 350px;
-  }
+.singles__about-button:hover {
+  background-color: var(--award-botton-hover);
 }
 </style>

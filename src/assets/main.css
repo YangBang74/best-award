@@ -2,6 +2,7 @@
 
 :root {
   --background-color: #ffffff;
+  --header-bg: #fff;
   --text-color: #000000;
   --text-color-hover: #646464;
   --button-radius: 5px;
@@ -11,11 +12,52 @@
   --base-font: 'Roboto Slab', sans-serif;
   --second-font: 'Special Gothic Expanded One', sans-serif;
   --button-disabled: #b6b6b6;
+  --border-buttom: #dddcdc;
+  --hero-bg: url('/hero/hero-white.svg');
+  --hero-color: #000;
+  --award-card-bg: #000000;
+  --award-card-text: #fff;
+  --footer-bg: silver;
+  --footer-svg-color: #000;
+  --button-hero-bg: #000;
+  --loader-color: #04346b;
+  --vote-card-bg: #dbdbdb80;
+  --award-botton-hover: #29292980;
+  --switch-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1) inset;
+  --transition: all 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+[data-theme='dark'] {
+  --background-color: #2c2c2c;
+  --header-bg: #2c2c2c;
+  --text-color: #ffffff;
+  --text-color-hover: #a8a8a8;
+  --button-radius: 5px;
+  --button-hero-bg: #000;
+  --button-background: #ffffff;
+  --button-text: #000000;
+  --button-hover: #ffffff80;
+  --base-font: 'Roboto Slab', sans-serif;
+  --second-font: 'Special Gothic Expanded One', sans-serif;
+  --button-disabled: #b6b6b6;
+  --border-buttom: #444444;
+  --hero-bg: url('/hero/hero-dark.svg');
+  --hero-color: #ffffff;
+  --foter-bg: #2b2b2b;
+  --footer-svg-color: #acabab;
+  --award-card-bg: #fff;
+  --award-card-text: #000000;
+  --loader-color: #5ca8ff;
+  --vote-card-bg: #e6e6e6;
+  --award-botton-hover: #29292980;
+}
+
+body {
+  background-color: var(--background-color);
 }
 
 .wrapper {
   font-family: 'Roboto Slab', sans-serif;
-  color: #000;
+  color: var(--text-color);
   font-weight: 400;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -38,7 +80,7 @@ body {
 #app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* минимум высота на весь экран */
+  min-height: 100vh;
 }
 
 @media (max-width: 768px) {
