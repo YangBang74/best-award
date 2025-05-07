@@ -214,7 +214,7 @@ body.lock {
   position: absolute;
   top: 25px;
   background-color: var(--header-sub-bg);
-  color: #000;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   justify-content: start;
