@@ -2,7 +2,9 @@
 import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const { locale } = useI18n()
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -17,10 +19,20 @@ const passwordLengthStatus = computed(() => {
   } else if (password.value.length < 6) {
     pasColor.value = 'red'
     pasCorrect.value = true
-    return 'Password is too short'
+    if (locale.value === 'en') {
+      return 'Password is too short'
+    }
+    if (locale.value === 'ru') {
+      return 'Пароль слишком короткий'
+    }
   } else {
     pasColor.value = 'green'
-    return 'Your password is strong and acceptable'
+    if (locale.value === 'en') {
+      return 'Your password is strong and acceptable'
+    }
+    if (locale.value === 'ru') {
+      return 'Ваш пароль надежный и приемлемый'
+    }
   }
 })
 
@@ -37,30 +49,30 @@ const signin = async () => {
 <template>
   <div class="wrap">
     <div class="regstation">
-      <h1 class="regstation__title">Welcome back!</h1>
-      <p class="resgstation__text">Enter your Credentials to acces your account</p>
+      <h1 class="regstation__title">{{ $t('sign.welcome') }}</h1>
+      <p class="resgstation__text">{{ $t('sign.welcome-text') }}</p>
       <div class="error">
         <p v-if="authStore.error">{{ authStore.error }}!</p>
       </div>
       <div class="regstation__form">
         <form @submit.prevent="signin">
           <div class="input__wrap">
-            <label for="mail">Email address</label>
+            <label for="mail">{{ $t('sign.mail') }}</label>
             <input
               type="email"
               name="mail"
               id="mail"
-              placeholder="Enter your email"
+              :placeholder="$t('sign.mail-plac')"
               v-model="email"
             />
           </div>
           <div class="input__wrap">
-            <label for="password">Password</label>
+            <label for="password">{{ $t('sign.password') }}</label>
             <input
               type="password"
               name="password"
               id="password"
-              placeholder="Create password"
+              :placeholder="$t('sign.password-plac')"
               v-model="password"
             />
             <p class="error-password" :style="{ color: pasColor }">{{ passwordLengthStatus }}</p>
@@ -122,12 +134,14 @@ const signin = async () => {
                 r="70"
               ></circle>
             </svg>
-            <p v-else>Sign in</p>
+            <p v-else>{{ $t('sign.in') }}</p>
           </button>
         </form>
       </div>
       <div class="regstation__sigin">
-        <p>Don't have an account? <a href="/signup">Sign up</a></p>
+        <p>
+          {{ $t('sign.dont') }}<a href="/signup">{{ $t('sign.up') }}</a>
+        </p>
       </div>
     </div>
   </div>

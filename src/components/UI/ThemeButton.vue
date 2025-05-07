@@ -16,8 +16,8 @@ const { theme, toggleTheme } = useTheme()
     <label for="checkbox" class="label">
       <svg
         class="moon"
-        width="24"
-        height="24"
+        width="20"
+        height="20"
         stroke-width="1.5"
         viewBox="0 0 24 24"
         fill="none"
@@ -32,8 +32,8 @@ const { theme, toggleTheme } = useTheme()
       </svg>
       <svg
         class="sun"
-        width="24"
-        height="24"
+        width="20"
+        height="20"
         stroke-width="1.5"
         viewBox="0 0 24 24"
         fill="none"
@@ -73,6 +73,12 @@ const { theme, toggleTheme } = useTheme()
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+}
+
+.theme-switch:hover {
+  border: 1px solid var(--border-color-hover);
 }
 
 .theme-switch .checkbox {
@@ -84,11 +90,11 @@ const { theme, toggleTheme } = useTheme()
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 7px;
   border-radius: 50px;
   position: relative;
-  height: 40px;
-  width: 80px;
+  height: 30px;
+  width: 65px;
   cursor: pointer;
   box-shadow: var(--switch-shadow);
   transition: var(--transition);
@@ -104,10 +110,10 @@ const { theme, toggleTheme } = useTheme()
   background-color: var(--text-color);
   position: absolute;
   border-radius: 50%;
-  top: 5px;
-  left: 5px;
-  height: 30px;
-  width: 30px;
+  top: 4px;
+  left: 6px;
+  height: 22px;
+  width: 22px;
 }
 
 .theme-switch .moon {
@@ -129,7 +135,7 @@ const { theme, toggleTheme } = useTheme()
 }
 
 .dark .theme-switch .ball {
-  transform: translatex(40px);
+  transform: translatex(30px);
 }
 
 @media (prefers-color-scheme: dark) {

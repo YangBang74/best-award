@@ -17,10 +17,20 @@ const passwordLengthStatus = computed(() => {
   } else if (password.value.length < 6) {
     pasColor.value = 'red'
     pasCorrect.value = true
-    return 'Password is too short'
+    if (locale.value === 'en') {
+      return 'Password is too short'
+    }
+    if (locale.value === 'ru') {
+      return 'Пароль слишком короткий'
+    }
   } else {
     pasColor.value = 'green'
-    return 'Your password is strong and acceptable'
+    if (locale.value === 'en') {
+      return 'Your password is strong and acceptable'
+    }
+    if (locale.value === 'ru') {
+      return 'Ваш пароль надежный и приемлемый'
+    }
   }
 })
 
@@ -33,30 +43,30 @@ const signup = async () => {
 <template>
   <div class="wrap">
     <div class="regstation">
-      <h1 class="regstation__title">Vote Now!</h1>
-      <p class="resgstation__text">Enter your Credentials to acces your account</p>
+      <h1 class="regstation__title">{{ $t('sign.vote') }}</h1>
+      <p class="resgstation__text">{{ $t('sign.vote-text') }}</p>
       <div class="error">
         <p v-if="authStore.error">{{ authStore.error }}!</p>
       </div>
       <div class="regstation__form">
         <form @submit.prevent="signup">
           <div class="input__wrap">
-            <label for="mail">Email address</label>
+            <label for="mail">{{ $t('sign.mail') }}</label>
             <input
               type="email"
               name="mail"
               id="mail"
-              placeholder="Enter your email"
+              :placeholder="$t('sign.mail-plac')"
               v-model="email"
             />
           </div>
           <div class="input__wrap">
-            <label for="password">Password</label>
+            <label for="password">{{ $t('sign.password') }}</label>
             <input
               type="password"
               name="password"
               id="password"
-              placeholder="Create password"
+              :placeholder="$t('sign.password-plac')"
               v-model="password"
             />
             <p class="error-password" :style="{ color: pasColor }">{{ passwordLengthStatus }}</p>
@@ -118,12 +128,14 @@ const signup = async () => {
                 r="70"
               ></circle>
             </svg>
-            <p v-else>Sign Up</p>
+            <p v-else>{{ $t('sign.up') }}</p>
           </button>
         </form>
       </div>
       <div class="regstation__sigin">
-        <p>Do you have an account? <a href="/signin">Sign In</a></p>
+        <p>
+          {{ $t('sign.have') }} <a href="/signin">{{ $t('sign.in') }}</a>
+        </p>
       </div>
     </div>
   </div>

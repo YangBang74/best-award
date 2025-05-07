@@ -52,5 +52,19 @@
     "album": "Best Albums",
     "vote": "Vote",
     "votes": "Votes:"
+  },
+  "sign": {
+    "welcome": "Welcome back!",
+    "welcome-text": "Enter your Credentials to access your account",
+    "mail": "Email address",
+    "mail-plac": "Enter your email",
+    "password": "Password",
+    "password-plac": "Enter your password",
+    "in": "Sign In",
+    "up": "Sign Up",
+    "dont": "Don't have an account?",
+    "vote": "Vote now",
+    "vote-text": "Enter your credentials to create your account.",
+    "have": "Do you have an account?"
   }
 }
