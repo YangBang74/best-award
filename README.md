@@ -85,7 +85,7 @@ npm run build
 
 ## 🌍 Live Demo
 
-🚧 Coming soon!
+🚧 https://best-award.vercel.app/
 
 ---
 
