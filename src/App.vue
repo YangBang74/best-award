@@ -5,25 +5,16 @@ import Footer from './components/Footer.vue'
 </script>
 
 <template>
-  <div class="wrapper">
-    <header>
-      <Menu />
-    </header>
-    <main>
-      <RouterView />
-    </main>
-    <Footer />
-  </div>
+  <header>
+    <Menu />
+  </header>
+  <main>
+    <RouterView />
+  </main>
+  <Footer />
 </template>
 
-<style scoped>
-.wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
+<style>
 main {
   padding: 55.33px 0 0;
   flex: 1;
