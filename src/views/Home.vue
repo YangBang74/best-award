@@ -65,15 +65,15 @@ const formatter = new Intl.NumberFormat('en', {
         <router-link to="/awards/best-song" class="awards__body-block">
           <p>{{ $t('home.awards-song') }}</p>
           <award-title-icon />
-        </a>
+        </router-link>
         <router-link to="/awards/best-album" class="awards__body-block">
           <p>{{ $t('home.awards-album') }}</p>
           <award-title-icon />
-        </a>
+        </router-link>
         <router-link to="/awards/best-singer" class="awards__body-block">
           <p>{{ $t('home.awards-singer') }}</p>
           <award-title-icon />
-        </a>
+        </router-link>
       </div>
     </div>
   </div>

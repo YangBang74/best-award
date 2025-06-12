@@ -32,14 +32,6 @@ const router = createRouter({
       },
     },
     {
-      path: '/profile',
-      name: 'profile',
-      component: () => import('@/views/Profile.vue'),
-      meta: {
-        auth: true,
-      },
-    },
-    {
       path: '/awards',
       name: 'awards',
       component: () => import('@/views/Awards/Awards.vue'),

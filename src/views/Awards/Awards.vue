@@ -66,7 +66,7 @@ Promise.all([
                     <p>{{ sing.author }}</p>
                     <p>{{ sing.name }}</p>
                   </div>
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
@@ -95,7 +95,7 @@ Promise.all([
                     <p>{{ sing.author }}</p>
                     <p>{{ sing.name }}</p>
                   </div>
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
@@ -124,7 +124,7 @@ Promise.all([
                     <p>{{ album.author }}</p>
                     <p>{{ album.name }}</p>
                   </div>
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
