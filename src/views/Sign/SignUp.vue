@@ -197,7 +197,6 @@ const signup = async () => {
   border: 1px solid #d9d9d9;
   border-radius: 8px;
   padding: 10px 0 10px 10px;
-  font-size: 10px;
   font-weight: 500;
   width: 96%;
 }
