@@ -58,7 +58,7 @@ Promise.all([
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
               <li class="glide__slide" v-for="sing in singers" :key="sing.id">
-                <a href="/awards/best-singer" class="singles__block">
+                <router-link to="/awards/best-singer" class="singles__block">
                   <div class="singles__block-img">
                     <img :src="sing.src" :alt="sing.name" loading="lazy" />
                   </div>
@@ -87,7 +87,7 @@ Promise.all([
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
               <li class="glide__slide" v-for="sing in singles" :key="sing.id">
-                <a href="/awards/best-song" class="singles__block">
+                <router-link to="/awards/best-song" class="singles__block">
                   <div class="singles__block-img">
                     <img :src="sing.src" :alt="sing.name" loading="lazy" />
                   </div>
@@ -116,7 +116,7 @@ Promise.all([
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
               <li class="glide__slide" v-for="album in albums" :key="album.id">
-                <a href="/awards/best-album" class="singles__block">
+                <router-link to="/awards/best-album" class="singles__block">
                   <div class="singles__block-img">
                     <img :src="album.src" :alt="album.name" loading="lazy" />
                   </div>

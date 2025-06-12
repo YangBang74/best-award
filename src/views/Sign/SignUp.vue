@@ -133,7 +133,7 @@ const signup = async () => {
     </div>
     <div class="regstation__sigin">
       <p>
-        {{ $t('sign.have') }} <a href="/signin">{{ $t('sign.in') }}</a>
+        {{ $t('sign.have') }} <router-link to="/signin">{{ $t('sign.in') }}</a>
       </p>
     </div>
   </div>

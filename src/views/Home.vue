@@ -62,15 +62,15 @@ const formatter = new Intl.NumberFormat('en', {
     <div class="container">
       <h1 class="section-title">{{ $t('home.award-title') }}</h1>
       <div class="awards__body">
-        <a href="/awards/best-song" class="awards__body-block">
+        <router-link to="/awards/best-song" class="awards__body-block">
           <p>{{ $t('home.awards-song') }}</p>
           <award-title-icon />
         </a>
-        <a href="/awards/best-album" class="awards__body-block">
+        <router-link to="/awards/best-album" class="awards__body-block">
           <p>{{ $t('home.awards-album') }}</p>
           <award-title-icon />
         </a>
-        <a href="/awards/best-singer" class="awards__body-block">
+        <router-link to="/awards/best-singer" class="awards__body-block">
           <p>{{ $t('home.awards-singer') }}</p>
           <award-title-icon />
         </a>

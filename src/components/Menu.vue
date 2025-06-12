@@ -42,7 +42,7 @@ const logout = () => {
   <header class="header">
     <div class="container">
       <div class="header__wrap">
-        <a class="header__logo" href="/">Best.Award</a>
+        <router-link class="header__logo" to="/">Best.Award</router-link>
         <nav class="header__menu" :class="{ active: menuActive }">
           <router-link to="/" @click="closeMenu">{{ $t('header.nav.home') }}</router-link>
           <router-link to="/awards" @click="closeMenu">{{ $t('header.nav.awards') }}</router-link>
