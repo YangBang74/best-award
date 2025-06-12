@@ -41,111 +41,104 @@ const signup = async () => {
 </script>
 
 <template>
-  <div class="wrap">
-    <div class="regstation">
-      <h1 class="regstation__title">{{ $t('sign.vote') }}</h1>
-      <p class="resgstation__text">{{ $t('sign.vote-text') }}</p>
-      <div class="error">
-        <p v-if="authStore.error">{{ authStore.error }}!</p>
-      </div>
-      <div class="regstation__form">
-        <form @submit.prevent="signup">
-          <div class="input__wrap">
-            <label for="mail">{{ $t('sign.mail') }}</label>
-            <input
-              type="email"
-              name="mail"
-              id="mail"
-              :placeholder="$t('sign.mail-plac')"
-              v-model="email"
-            />
-          </div>
-          <div class="input__wrap">
-            <label for="password">{{ $t('sign.password') }}</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              :placeholder="$t('sign.password-plac')"
-              v-model="password"
-            />
-            <p class="error-password" :style="{ color: pasColor }">{{ passwordLengthStatus }}</p>
-          </div>
-          <button type="submit" class="regstation__button button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 200 200"
-              width="25px"
-              height="25px"
-              v-if="authStore.loader"
+  <div class="regstation">
+    <h1 class="regstation__title">{{ $t('sign.vote') }}</h1>
+    <p class="resgstation__text">{{ $t('sign.vote-text') }}</p>
+    <div class="error">
+      <p v-if="authStore.error">{{ authStore.error }}!</p>
+    </div>
+    <div class="regstation__form">
+      <form @submit.prevent="signup">
+        <div class="input__wrap">
+          <label for="mail">{{ $t('sign.mail') }}</label>
+          <input
+            type="email"
+            name="mail"
+            id="mail"
+            :placeholder="$t('sign.mail-plac')"
+            v-model="email"
+          />
+        </div>
+        <div class="input__wrap">
+          <label for="password">{{ $t('sign.password') }}</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            :placeholder="$t('sign.password-plac')"
+            v-model="password"
+          />
+          <p class="error-password" :style="{ color: pasColor }">{{ passwordLengthStatus }}</p>
+        </div>
+        <button type="submit" class="regstation__button button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+            width="25px"
+            height="25px"
+            v-if="authStore.loader"
+          >
+            <radialGradient
+              id="a12"
+              cx=".66"
+              fx=".66"
+              cy=".3125"
+              fy=".3125"
+              gradientTransform="scale(1.5)"
             >
-              <radialGradient
-                id="a12"
-                cx=".66"
-                fx=".66"
-                cy=".3125"
-                fy=".3125"
-                gradientTransform="scale(1.5)"
-              >
-                <stop offset="0" stop-color="#000"></stop>
-                <stop offset=".3" stop-color="#000" stop-opacity=".9"></stop>
-                <stop offset=".6" stop-color="#000" stop-opacity=".6"></stop>
-                <stop offset=".8" stop-color="#000" stop-opacity=".3"></stop>
-                <stop offset="1" stop-color="#000" stop-opacity="0"></stop>
-              </radialGradient>
-              <circle
-                transform-origin="center"
-                fill="none"
-                stroke="url(#a12)"
-                stroke-width="15"
-                stroke-linecap="round"
-                stroke-dasharray="200 1000"
-                stroke-dashoffset="0"
-                cx="100"
-                cy="100"
-                r="70"
-              >
-                <animateTransform
-                  type="rotate"
-                  attributeName="transform"
-                  calcMode="spline"
-                  dur="0.8"
-                  values="360;0"
-                  keyTimes="0;1"
-                  keySplines="0 0 1 1"
-                  repeatCount="indefinite"
-                ></animateTransform>
-              </circle>
-              <circle
-                transform-origin="center"
-                fill="none"
-                opacity=".2"
-                stroke="#000"
-                stroke-width="15"
-                stroke-linecap="round"
-                cx="100"
-                cy="100"
-                r="70"
-              ></circle>
-            </svg>
-            <p v-else>{{ $t('sign.up') }}</p>
-          </button>
-        </form>
-      </div>
-      <div class="regstation__sigin">
-        <p>
-          {{ $t('sign.have') }} <a href="/signin">{{ $t('sign.in') }}</a>
-        </p>
-      </div>
+              <stop offset="0" stop-color="#000"></stop>
+              <stop offset=".3" stop-color="#000" stop-opacity=".9"></stop>
+              <stop offset=".6" stop-color="#000" stop-opacity=".6"></stop>
+              <stop offset=".8" stop-color="#000" stop-opacity=".3"></stop>
+              <stop offset="1" stop-color="#000" stop-opacity="0"></stop>
+            </radialGradient>
+            <circle
+              transform-origin="center"
+              fill="none"
+              stroke="url(#a12)"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-dasharray="200 1000"
+              stroke-dashoffset="0"
+              cx="100"
+              cy="100"
+              r="70"
+            >
+              <animateTransform
+                type="rotate"
+                attributeName="transform"
+                calcMode="spline"
+                dur="0.8"
+                values="360;0"
+                keyTimes="0;1"
+                keySplines="0 0 1 1"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </circle>
+            <circle
+              transform-origin="center"
+              fill="none"
+              opacity=".2"
+              stroke="#000"
+              stroke-width="15"
+              stroke-linecap="round"
+              cx="100"
+              cy="100"
+              r="70"
+            ></circle>
+          </svg>
+          <p v-else>{{ $t('sign.up') }}</p>
+        </button>
+      </form>
+    </div>
+    <div class="regstation__sigin">
+      <p>
+        {{ $t('sign.have') }} <a href="/signin">{{ $t('sign.in') }}</a>
+      </p>
     </div>
   </div>
 </template>
 <style scoped>
-.wrap {
-  height: 100vh;
-  align-content: center;
-  justify-items: center;
-}
 .error {
   margin: 15px 0 20px;
   height: 16px;
@@ -163,7 +156,7 @@ const signup = async () => {
   background-color: #2c2c2c;
   padding: 50px;
   border-radius: 20px;
-  margin: 0 20px;
+  margin: 50px auto;
 }
 
 .regstation__title {

@@ -1,37 +1,23 @@
 <script setup>
 import AwardTitleIcon from '@/components/icons/AwardTitleIcon.vue'
-import { ref } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import lastFm from '@/services/lastFm'
 
 const topTracks = ref([])
 const topArtists = ref([])
 
-const apiKey = import.meta.env.VITE_LASTFM_API_KEY
-
-const getTopTracks = async () => {
+const getCharts = async () => {
   try {
-    const response = await axios.get(
-      `https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${apiKey}&format=json`
-    )
-    topTracks.value = response.data.tracks.track
-  } catch (error) {
-    console.error('Error fetching top tracks:', error)
+    topTracks.value = await lastFm.getTopTracks()
+    topArtists.value = await lastFm.getTopArtists()
+  } catch (e) {
+    console.log(e.message)
   }
 }
 
-const getTopArtists = async () => {
-  try {
-    const response = await axios.get(
-      `https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${apiKey}&format=json`
-    )
-    topArtists.value = response.data.artists.artist
-  } catch (error) {
-    console.error('Error fetching top tracks:', error)
-  }
-}
-
-getTopArtists()
-getTopTracks()
+onMounted(() => {
+  getCharts()
+})
 
 const formatter = new Intl.NumberFormat('en', {
   notation: 'compact',

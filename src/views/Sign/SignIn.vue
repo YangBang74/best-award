@@ -140,19 +140,13 @@ const signin = async () => {
       </div>
       <div class="regstation__sigin">
         <p>
-          {{ $t('sign.dont') }}<a href="/signup">{{ $t('sign.up') }}</a>
+          {{ $t('sign.dont') }} <a href="/signup">{{ $t('sign.up') }}</a>
         </p>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
-.wrap {
-  height: 100vh;
-  align-content: center;
-  justify-items: center;
-}
-
 .error {
   margin: 15px 0 20px;
   height: 16px;
@@ -175,7 +169,6 @@ const signin = async () => {
   background-color: #2c2c2c;
   padding: 50px;
   border-radius: 20px;
-  margin: 0 20px;
 }
 
 .regstation__title {
